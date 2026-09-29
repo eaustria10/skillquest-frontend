@@ -5,965 +5,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>AGENT PRO – CONTACT CENTER SERVICING NC ASSESSMENT</title>
     <style>
-        /* ─── IMPORTS & RESET ─── */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;600;700;800;900&display=swap');
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: #080b12;
-            color: #e8edf5;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 12px;
-            user-select: none;
-            overflow-x: hidden;
-        }
-        #app {
-            width: 100%;
-            max-width: 460px;
-            background: rgba(18, 24, 32, 0.75);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-radius: 48px;
-            padding: 20px 16px 24px;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 180, 255, 0.05);
-            position: relative;
-            min-height: 720px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        #app::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 180, 255, 0.04), transparent 40%),
-                radial-gradient(circle at 70% 60%, rgba(0, 255, 200, 0.02), transparent 50%);
-            z-index: -1;
-            animation: bgPulse 15s ease-in-out infinite alternate;
-        }
-        @keyframes bgPulse {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(10%, 5%) scale(1.2);
-            }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #080b12; color: #e8edf5; min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 12px; user-select: none; overflow-x: hidden; }
+        #app { width: 100%; max-width: 460px; background: rgba(18, 24, 32, 0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-radius: 48px; padding: 20px 16px 24px; box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8), 0 0 60px rgba(0, 180, 255, 0.05); position: relative; min-height: 720px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.08); }
+        #app::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle at 30% 40%, rgba(0, 180, 255, 0.04), transparent 40%), radial-gradient(circle at 70% 60%, rgba(0, 255, 200, 0.02), transparent 50%); z-index: -1; animation: bgPulse 15s ease-in-out infinite alternate; }
+        @keyframes bgPulse { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(10%, 5%) scale(1.2); } }
+        .screen { display: none; flex-direction: column; animation: fadeSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); position: relative; z-index: 2; }
+        .screen.active { display: flex; }
+        @keyframes fadeSlideIn { 0% { opacity: 0; transform: translateY(20px) scale(0.96); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #00b4ff; border-radius: 12px; box-shadow: 0 0 10px rgba(0, 180, 255, 0.3); }
 
-        .screen {
-            display: none;
-            flex-direction: column;
-            animation: fadeSlideIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            z-index: 2;
-        }
-        .screen.active {
-            display: flex;
-        }
-        @keyframes fadeSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(20px) scale(0.96);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
+        .title-main { font-family: 'Orbitron', monospace; font-size: 24px; font-weight: 900; letter-spacing: 2px; background: linear-gradient(135deg, #00b4ff, #00e5ff, #00b4ff); background-size: 200% 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmerText 4s ease-in-out infinite; text-shadow: 0 0 40px rgba(0, 180, 255, 0.2); text-align: center; margin-bottom: 2px; }
+        @keyframes shimmerText { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .title-sub { font-size: 10px; color: rgba(138, 155, 176, 0.7); text-align: center; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 16px; font-weight: 700; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 12px; }
+        .heading { font-family: 'Orbitron', monospace; font-size: 18px; font-weight: 700; color: #f0f4fa; letter-spacing: 1px; text-shadow: 0 0 20px rgba(0, 180, 255, 0.15); }
+        .subheading { font-size: 13px; color: #8a9bb0; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .label-sm { font-size: 10px; color: #6a7b90; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+        .text-glow { text-shadow: 0 0 20px rgba(0, 180, 255, 0.3); }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #00b4ff;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0, 180, 255, 0.3);
-        }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: none; border-radius: 60px; font-size: 14px; font-weight: 800; cursor: pointer; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); background: rgba(42, 52, 64, 0.6); color: #e8edf5; width: 100%; touch-action: manipulation; text-transform: uppercase; letter-spacing: 1.5px; border: 1px solid rgba(255, 255, 255, 0.05); backdrop-filter: blur(4px); position: relative; overflow: hidden; }
+        .btn::after { content: ''; position: absolute; inset: -2px; border-radius: 60px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent); z-index: 0; pointer-events: none; }
+        .btn>* { position: relative; z-index: 1; }
+        .btn:active { transform: scale(0.94); }
+        .btn-primary { background: linear-gradient(135deg, #00b4ff, #0088cc); color: #0b0e14; box-shadow: 0 4px 25px rgba(0, 180, 255, 0.35); border: none; }
+        .btn-primary:active { box-shadow: 0 2px 15px rgba(0, 180, 255, 0.6); transform: scale(0.95); }
+        .btn-secondary { background: rgba(31, 42, 56, 0.8); color: #c8d4e0; border: 1px solid rgba(255, 255, 255, 0.05); }
+        .btn-success { background: linear-gradient(135deg, #00c853, #009624); color: #fff; box-shadow: 0 4px 20px rgba(0, 200, 83, 0.3); }
+        .btn-danger { background: linear-gradient(135deg, #ff1744, #b71c1c); color: #fff; box-shadow: 0 4px 20px rgba(255, 23, 68, 0.3); }
+        .btn:disabled { opacity: 0.3; pointer-events: none; transform: scale(0.98); box-shadow: none !important; }
 
-        /* ─── TYPOGRAPHY & GLOW ─── */
-        .title-main {
-            font-family: 'Orbitron', monospace;
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #00b4ff, #00e5ff, #00b4ff);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmerText 4s ease-in-out infinite;
-            text-shadow: 0 0 40px rgba(0, 180, 255, 0.2);
-            text-align: center;
-            margin-bottom: 2px;
-        }
-        @keyframes shimmerText {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-        .title-sub {
-            font-size: 10px;
-            color: rgba(138, 155, 176, 0.7);
-            text-align: center;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
-            font-weight: 700;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            padding-bottom: 12px;
-        }
-        .heading {
-            font-family: 'Orbitron', monospace;
-            font-size: 18px;
-            font-weight: 700;
-            color: #f0f4fa;
-            letter-spacing: 1px;
-            text-shadow: 0 0 20px rgba(0, 180, 255, 0.15);
-        }
-        .subheading {
-            font-size: 13px;
-            color: #8a9bb0;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .label-sm {
-            font-size: 10px;
-            color: #6a7b90;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-        }
-        .text-glow {
-            text-shadow: 0 0 20px rgba(0, 180, 255, 0.3);
-        }
+        .menu-grid { display: flex; flex-direction: column; gap: 12px; margin: 6px 0 16px; }
+        .menu-item { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(8px); border-radius: 24px; padding: 16px 18px; display: flex; align-items: center; gap: 16px; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1px solid rgba(255, 255, 255, 0.04); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); position: relative; overflow: hidden; }
+        .menu-item::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0, 180, 255, 0.05), transparent); opacity: 0; transition: opacity 0.3s ease; }
+        .menu-item:active { transform: scale(0.96); border-color: #00b4ff; }
+        .menu-item:active::before { opacity: 1; }
+        .menu-item .icon { font-size: 28px; width: 52px; height: 52px; border-radius: 16px; background: linear-gradient(135deg, #00b4ff, #0088cc); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 15px rgba(0, 180, 255, 0.25); color: #0b0e14; }
+        .menu-item .info { flex: 1; }
+        .menu-item .info .name { font-size: 16px; font-weight: 800; color: #f0f4fa; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+        .menu-item .info .desc { font-size: 12px; color: #8a9bb0; font-weight: 500; }
+        .menu-item .arrow { color: #4a5a70; font-size: 22px; font-weight: 300; }
+        .menu-item.locked { opacity: 0.5; pointer-events: none; filter: grayscale(0.8); }
+        .menu-item .badge { background: #00b4ff; color: #0b0e14; font-size: 9px; font-weight: 900; padding: 2px 12px; border-radius: 60px; letter-spacing: 0.5px; text-transform: uppercase; }
+        .menu-item .badge.complete { background: #00c853; color: #fff; }
+        .menu-item.shake { animation: shake 0.4s ease-in-out; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
 
-        /* ─── BUTTONS ─── */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 24px;
-            border: none;
-            border-radius: 60px;
-            font-size: 14px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            background: rgba(42, 52, 64, 0.6);
-            color: #e8edf5;
-            width: 100%;
-            touch-action: manipulation;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(4px);
-            position: relative;
-            overflow: hidden;
-        }
-        .btn::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 60px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .btn>* {
-            position: relative;
-            z-index: 1;
-        }
-        .btn:active {
-            transform: scale(0.94);
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #00b4ff, #0088cc);
-            color: #0b0e14;
-            box-shadow: 0 4px 25px rgba(0, 180, 255, 0.35);
-            border: none;
-        }
-        .btn-primary:active {
-            box-shadow: 0 2px 15px rgba(0, 180, 255, 0.6);
-            transform: scale(0.95);
-        }
-        .btn-secondary {
-            background: rgba(31, 42, 56, 0.8);
-            color: #c8d4e0;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .btn-success {
-            background: linear-gradient(135deg, #00c853, #009624);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(0, 200, 83, 0.3);
-        }
-        .btn-danger {
-            background: linear-gradient(135deg, #ff1744, #b71c1c);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(255, 23, 68, 0.3);
-        }
-        .btn:disabled {
-            opacity: 0.3;
-            pointer-events: none;
-            transform: scale(0.98);
-            box-shadow: none !important;
-        }
+        .progress-wrap { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(8px); border-radius: 60px; padding: 12px 16px; margin-top: 4px; border: 1px solid rgba(255, 255, 255, 0.04); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .progress-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700; }
+        .progress-row .label { color: #8a9bb0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .progress-row .value { color: #00b4ff; text-shadow: 0 0 10px rgba(0, 180, 255, 0.2); }
+        .progress-track { width: 100%; height: 6px; background: rgba(35, 47, 64, 0.6); border-radius: 12px; margin-top: 6px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3); }
+        .progress-track .fill { height: 100%; background: linear-gradient(90deg, #00b4ff, #00e5ff); border-radius: 12px; transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 15px rgba(0, 180, 255, 0.3); }
 
-        /* ─── MENU GRID ─── */
-        .menu-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin: 6px 0 16px;
-        }
-        .menu-item {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 16px 18px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-        .menu-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 180, 255, 0.05), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .menu-item:active {
-            transform: scale(0.96);
-            border-color: #00b4ff;
-        }
-        .menu-item:active::before {
-            opacity: 1;
-        }
-        .menu-item .icon {
-            font-size: 28px;
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #00b4ff, #0088cc);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(0, 180, 255, 0.25);
-            color: #0b0e14;
-        }
-        .menu-item .info {
-            flex: 1;
-        }
-        .menu-item .info .name {
-            font-size: 16px;
-            font-weight: 800;
-            color: #f0f4fa;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-        .menu-item .info .desc {
-            font-size: 12px;
-            color: #8a9bb0;
-            font-weight: 500;
-        }
-        .menu-item .arrow {
-            color: #4a5a70;
-            font-size: 22px;
-            font-weight: 300;
-        }
-        .menu-item.locked {
-            opacity: 0.5;
-            pointer-events: none;
-            filter: grayscale(0.8);
-        }
-        .menu-item .badge {
-            background: #00b4ff;
-            color: #0b0e14;
-            font-size: 9px;
-            font-weight: 900;
-            padding: 2px 12px;
-            border-radius: 60px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .menu-item .badge.complete {
-            background: #00c853;
-            color: #fff;
-        }
-        .menu-item.shake {
-            animation: shake 0.4s ease-in-out;
-        }
-        @keyframes shake {
-            0%,
-            100% {
-                transform: translateX(0);
-            }
-            25% {
-                transform: translateX(-8px);
-            }
-            75% {
-                transform: translateX(8px);
-            }
-        }
+        .level-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 12px 0 16px; }
+        .level-card { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(8px); border-radius: 20px; padding: 12px 6px 10px; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid rgba(255, 255, 255, 0.04); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); overflow: hidden; min-width: 0; }
+        .level-card:active { transform: scale(0.92); }
+        .level-card .num { font-family: 'Orbitron', monospace; font-size: 22px; font-weight: 900; color: #f0f4fa; text-shadow: 0 0 10px rgba(255, 255, 255, 0.05); }
+        .level-card .name { font-size: 8px; color: #8a9bb0; margin-top: 2px; line-height: 1.2; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; overflow-wrap: break-word; word-break: break-word; hyphens: auto; }
+        .level-card .stars { font-size: 12px; color: #00b4ff; margin-top: 4px; text-shadow: 0 0 10px rgba(0, 180, 255, 0.3); }
+        .level-card.locked { opacity: 0.3; pointer-events: none; filter: grayscale(1); }
+        .level-card.active { border-color: #00b4ff; background: rgba(0, 180, 255, 0.08); box-shadow: 0 0 30px rgba(0, 180, 255, 0.15); transform: scale(1.05); }
+        .level-card.completed { border-color: #00c853; background: rgba(0, 200, 83, 0.05); box-shadow: 0 0 20px rgba(0, 200, 83, 0.1); }
 
-        /* ─── PROGRESS / XP BAR ─── */
-        .progress-wrap {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 60px;
-            padding: 12px 16px;
-            margin-top: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .progress-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            font-weight: 700;
-        }
-        .progress-row .label {
-            color: #8a9bb0;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .progress-row .value {
-            color: #00b4ff;
-            text-shadow: 0 0 10px rgba(0, 180, 255, 0.2);
-        }
-        .progress-track {
-            width: 100%;
-            height: 6px;
-            background: rgba(35, 47, 64, 0.6);
-            border-radius: 12px;
-            margin-top: 6px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
-        }
-        .progress-track .fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00b4ff, #00e5ff);
-            border-radius: 12px;
-            transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 15px rgba(0, 180, 255, 0.3);
-        }
+        .instructions-box { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(8px); border-radius: 24px; padding: 18px 20px; margin: 8px 0 16px; border: 1px solid rgba(255, 255, 255, 0.04); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); }
+        .instructions-box .obj { font-weight: 800; font-size: 16px; color: #f0f4fa; margin-bottom: 4px; }
+        .instructions-box .detail { font-size: 13px; color: #b0c0d0; line-height: 1.5; font-weight: 500; }
+        .instructions-box .rule { font-size: 13px; color: #8a9bb0; padding-left: 16px; margin: 4px 0; position: relative; font-weight: 500; }
+        .instructions-box .rule::before { content: "▶"; position: absolute; left: -4px; color: #00b4ff; font-size: 10px; top: 2px; }
 
-        /* ─── LEVEL GRID ─── */
-        .level-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-            margin: 12px 0 16px;
-        }
-        .level-card {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 20px;
-            padding: 12px 6px 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 2px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-            min-width: 0;
-        }
-        .level-card:active {
-            transform: scale(0.92);
-        }
-        .level-card .num {
-            font-family: 'Orbitron', monospace;
-            font-size: 22px;
-            font-weight: 900;
-            color: #f0f4fa;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-        }
-        .level-card .name {
-            font-size: 8px;
-            color: #8a9bb0;
-            margin-top: 2px;
-            line-height: 1.2;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            overflow-wrap: break-word;
-            word-break: break-word;
-            hyphens: auto;
-        }
-        .level-card .stars {
-            font-size: 12px;
-            color: #00b4ff;
-            margin-top: 4px;
-            text-shadow: 0 0 10px rgba(0, 180, 255, 0.3);
-        }
-        .level-card.locked {
-            opacity: 0.3;
-            pointer-events: none;
-            filter: grayscale(1);
-        }
-        .level-card.active {
-            border-color: #00b4ff;
-            background: rgba(0, 180, 255, 0.08);
-            box-shadow: 0 0 30px rgba(0, 180, 255, 0.15);
-            transform: scale(1.05);
-        }
-        .level-card.completed {
-            border-color: #00c853;
-            background: rgba(0, 200, 83, 0.05);
-            box-shadow: 0 0 20px rgba(0, 200, 83, 0.1);
-        }
+        .game-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; background: rgba(26, 35, 48, 0.4); padding: 8px 16px; border-radius: 60px; backdrop-filter: blur(4px); border: 1px solid rgba(255, 255, 255, 0.04); }
+        .game-header .level-tag { font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 700; color: #00b4ff; text-shadow: 0 0 10px rgba(0, 180, 255, 0.2); }
+        .game-header .timer { font-family: 'Orbitron', monospace; font-size: 14px; color: #8a9bb0; font-weight: 600; }
+        .game-header .stars-display { color: #00b4ff; font-size: 16px; text-shadow: 0 0 10px rgba(0, 180, 255, 0.3); }
 
-        /* ─── INSTRUCTIONS BOX ─── */
-        .instructions-box {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 24px;
-            padding: 18px 20px;
-            margin: 8px 0 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .instructions-box .obj {
-            font-weight: 800;
-            font-size: 16px;
-            color: #f0f4fa;
-            margin-bottom: 4px;
-        }
-        .instructions-box .detail {
-            font-size: 13px;
-            color: #b0c0d0;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-        .instructions-box .rule {
-            font-size: 13px;
-            color: #8a9bb0;
-            padding-left: 16px;
-            margin: 4px 0;
-            position: relative;
-            font-weight: 500;
-        }
-        .instructions-box .rule::before {
-            content: "▶";
-            position: absolute;
-            left: -4px;
-            color: #00b4ff;
-            font-size: 10px;
-            top: 2px;
-        }
+        .back-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .back-btn { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(4px); border: 1px solid rgba(255, 255, 255, 0.04); color: #c8d4e0; font-size: 24px; padding: 4px 12px; border-radius: 16px; cursor: pointer; transition: 0.2s ease; touch-action: manipulation; font-weight: 300; }
+        .back-btn:active { transform: scale(0.88); background: rgba(35, 47, 64, 0.8); }
 
-        /* ─── GAME HEADER ─── */
-        .game-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            background: rgba(26, 35, 48, 0.4);
-            padding: 8px 16px;
-            border-radius: 60px;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .game-header .level-tag {
-            font-family: 'Orbitron', monospace;
-            font-size: 12px;
-            font-weight: 700;
-            color: #00b4ff;
-            text-shadow: 0 0 10px rgba(0, 180, 255, 0.2);
-        }
-        .game-header .timer {
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            color: #8a9bb0;
-            font-weight: 600;
-        }
-        .game-header .stars-display {
-            color: #00b4ff;
-            font-size: 16px;
-            text-shadow: 0 0 10px rgba(0, 180, 255, 0.3);
-        }
+        .drag-zone { background: rgba(15, 23, 32, 0.6); backdrop-filter: blur(4px); border-radius: 20px; padding: 16px; min-height: 90px; border: 2px dashed rgba(255, 255, 255, 0.06); margin: 8px 0 12px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; transition: all 0.3s ease; box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.2); }
+        .drag-zone.drag-over { border-color: #00b4ff; background: rgba(0, 180, 255, 0.05); box-shadow: inset 0 0 40px rgba(0, 180, 255, 0.05); }
+        .drag-item { background: rgba(35, 47, 64, 0.8); backdrop-filter: blur(4px); padding: 12px 20px; border-radius: 16px; font-size: 14px; font-weight: 700; cursor: grab; touch-action: none; transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1px solid rgba(255, 255, 255, 0.06); color: #e8edf5; min-width: 60px; text-align: center; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); }
+        .drag-item:active { cursor: grabbing; transform: scale(0.92); }
+        .drag-item.dragging { opacity: 0.3; transform: scale(0.8); }
+        .drag-item.placed { background: rgba(0, 200, 83, 0.15); border-color: #00c853; opacity: 0.5; pointer-events: none; transform: scale(0.9); }
+        .drag-item.wrong { background: rgba(255, 23, 68, 0.15); border-color: #ff1744; animation: shake 0.3s; }
 
-        /* ─── BACK ROW ─── */
-        .back-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        .back-btn {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            color: #c8d4e0;
-            font-size: 24px;
-            padding: 4px 12px;
-            border-radius: 16px;
-            cursor: pointer;
-            transition: 0.2s ease;
-            touch-action: manipulation;
-            font-weight: 300;
-        }
-        .back-btn:active {
-            transform: scale(0.88);
-            background: rgba(35, 47, 64, 0.8);
-        }
+        .drag-ghost { position: fixed; pointer-events: none; z-index: 999; background: rgba(35, 47, 64, 0.9); backdrop-filter: blur(8px); padding: 12px 24px; border-radius: 16px; font-size: 14px; font-weight: 700; color: #e8edf5; border: 2px solid #00b4ff; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6); transform: translate(-50%, -50%) scale(1.05); opacity: 0.95; white-space: nowrap; }
 
-        /* ─── DRAG & DROP ZONES ─── */
-        .drag-zone {
-            background: rgba(15, 23, 32, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 20px;
-            padding: 16px;
-            min-height: 90px;
-            border: 2px dashed rgba(255, 255, 255, 0.06);
-            margin: 8px 0 12px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .drag-zone.drag-over {
-            border-color: #00b4ff;
-            background: rgba(0, 180, 255, 0.05);
-            box-shadow: inset 0 0 40px rgba(0, 180, 255, 0.05);
-        }
-        .drag-item {
-            background: rgba(35, 47, 64, 0.8);
-            backdrop-filter: blur(4px);
-            padding: 12px 20px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: grab;
-            touch-action: none;
-            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #e8edf5;
-            min-width: 60px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        .drag-item:active {
-            cursor: grabbing;
-            transform: scale(0.92);
-        }
-        .drag-item.dragging {
-            opacity: 0.3;
-            transform: scale(0.8);
-        }
-        .drag-item.placed {
-            background: rgba(0, 200, 83, 0.15);
-            border-color: #00c853;
-            opacity: 0.5;
-            pointer-events: none;
-            transform: scale(0.9);
-        }
-        .drag-item.wrong {
-            background: rgba(255, 23, 68, 0.15);
-            border-color: #ff1744;
-            animation: shake 0.3s;
-        }
+        .flow-board { background: rgba(15, 23, 32, 0.6); backdrop-filter: blur(4px); border-radius: 20px; padding: 16px; min-height: 140px; border: 2px solid rgba(255, 255, 255, 0.04); margin: 6px 0 10px; display: flex; flex-direction: column; gap: 6px; box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.2); }
+        .flow-board .flow-step { background: rgba(26, 35, 48, 0.6); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; border-left: 3px solid #2a3440; transition: all 0.3s ease; }
+        .flow-board .flow-step .step-num { font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 900; color: #4a5a70; min-width: 28px; }
+        .flow-board .flow-step .step-text { font-size: 13px; font-weight: 600; color: #b0c0d0; flex: 1; }
+        .flow-board .flow-step .step-status { font-size: 18px; }
+        .flow-board .flow-step.correct { border-left-color: #00c853; background: rgba(0, 200, 83, 0.05); }
+        .flow-board .flow-step.correct .step-num { color: #00c853; }
+        .flow-board .flow-step.correct .step-text { color: #e8edf5; }
+        .flow-board .flow-step.wrong { border-left-color: #ff1744; background: rgba(255, 23, 68, 0.05); animation: shake 0.3s; }
+        .flow-board .flow-step.wrong .step-num { color: #ff1744; }
 
-        /* ─── DRAG GHOST ─── */
-        .drag-ghost {
-            position: fixed;
-            pointer-events: none;
-            z-index: 999;
-            background: rgba(35, 47, 64, 0.9);
-            backdrop-filter: blur(8px);
-            padding: 12px 24px;
-            border-radius: 16px;
-            font-size: 14px;
-            font-weight: 700;
-            color: #e8edf5;
-            border: 2px solid #00b4ff;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-            transform: translate(-50%, -50%) scale(1.05);
-            opacity: 0.95;
-            white-space: nowrap;
-        }
+        .scenario-box { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(4px); border-radius: 16px; padding: 14px 16px; margin: 4px 0 8px; border-left: 4px solid #00b4ff; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); }
+        .scenario-box .scenario-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #8a9bb0; margin-bottom: 4px; }
+        .scenario-box .scenario-text { font-size: 15px; font-weight: 700; color: #f0f4fa; line-height: 1.4; }
+        .scenario-box .scenario-options { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+        .scenario-box .scenario-options .opt-btn { background: rgba(35, 47, 64, 0.6); border: 2px solid transparent; border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: #e8edf5; text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%; }
+        .scenario-box .scenario-options .opt-btn:active { transform: scale(0.96); }
+        .scenario-box .scenario-options .opt-btn.selected-correct { border-color: #00c853; background: rgba(0, 200, 83, 0.1); color: #00c853; }
+        .scenario-box .scenario-options .opt-btn.selected-wrong { border-color: #ff1744; background: rgba(255, 23, 68, 0.1); color: #ff1744; }
+        .scenario-box .scenario-options .opt-btn:disabled { opacity: 0.5; pointer-events: none; }
+        .scenario-feedback { font-size: 13px; text-align: center; padding: 8px 12px; border-radius: 12px; margin-top: 8px; font-weight: 700; background: rgba(26, 35, 48, 0.4); }
+        .scenario-feedback.success { color: #00c853; border: 1px solid rgba(0, 200, 83, 0.2); }
+        .scenario-feedback.error { color: #ff1744; border: 1px solid rgba(255, 23, 68, 0.2); }
+        .scenario-feedback.info { color: #00b4ff; border: 1px solid rgba(0, 180, 255, 0.2); }
 
-        /* ─── SCRIPT SAVVY (Call Flow) ─── */
-        .flow-board {
-            background: rgba(15, 23, 32, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 20px;
-            padding: 16px;
-            min-height: 140px;
-            border: 2px solid rgba(255, 255, 255, 0.04);
-            margin: 6px 0 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .flow-board .flow-step {
-            background: rgba(26, 35, 48, 0.6);
-            border-radius: 12px;
-            padding: 10px 14px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border-left: 3px solid #2a3440;
-            transition: all 0.3s ease;
-        }
-        .flow-board .flow-step .step-num {
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            font-weight: 900;
-            color: #4a5a70;
-            min-width: 28px;
-        }
-        .flow-board .flow-step .step-text {
-            font-size: 13px;
-            font-weight: 600;
-            color: #b0c0d0;
-            flex: 1;
-        }
-        .flow-board .flow-step .step-status {
-            font-size: 18px;
-        }
-        .flow-board .flow-step.correct {
-            border-left-color: #00c853;
-            background: rgba(0, 200, 83, 0.05);
-        }
-        .flow-board .flow-step.correct .step-num {
-            color: #00c853;
-        }
-        .flow-board .flow-step.correct .step-text {
-            color: #e8edf5;
-        }
-        .flow-board .flow-step.wrong {
-            border-left-color: #ff1744;
-            background: rgba(255, 23, 68, 0.05);
-            animation: shake 0.3s;
-        }
-        .flow-board .flow-step.wrong .step-num {
-            color: #ff1744;
-        }
+        .qa-question { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(4px); border-radius: 16px; padding: 14px 16px; margin: 4px 0 8px; border: 1px solid rgba(255, 255, 255, 0.04); }
+        .qa-question .q-text { font-size: 15px; font-weight: 700; color: #f0f4fa; margin-bottom: 8px; }
+        .qa-question .q-options { display: flex; flex-direction: column; gap: 6px; }
+        .qa-question .q-options .opt-btn { background: rgba(35, 47, 64, 0.6); border: 2px solid transparent; border-radius: 12px; padding: 10px 14px; font-size: 13px; font-weight: 600; color: #e8edf5; text-align: left; cursor: pointer; transition: all 0.2s ease; width: 100%; }
+        .qa-question .q-options .opt-btn:active { transform: scale(0.96); }
+        .qa-question .q-options .opt-btn.selected-correct { border-color: #00c853; background: rgba(0, 200, 83, 0.1); color: #00c853; }
+        .qa-question .q-options .opt-btn.selected-wrong { border-color: #ff1744; background: rgba(255, 23, 68, 0.1); color: #ff1744; }
+        .qa-question .q-options .opt-btn:disabled { opacity: 0.5; pointer-events: none; }
 
-        /* ─── CALM THE STORM (De-escalation) ─── */
-        .scenario-box {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin: 4px 0 8px;
-            border-left: 4px solid #00b4ff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .scenario-box .scenario-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #8a9bb0;
-            margin-bottom: 4px;
-        }
-        .scenario-box .scenario-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #f0f4fa;
-            line-height: 1.4;
-        }
-        .scenario-box .scenario-options {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            margin-top: 10px;
-        }
-        .scenario-box .scenario-options .opt-btn {
-            background: rgba(35, 47, 64, 0.6);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 10px 14px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8edf5;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            width: 100%;
-        }
-        .scenario-box .scenario-options .opt-btn:active {
-            transform: scale(0.96);
-        }
-        .scenario-box .scenario-options .opt-btn.selected-correct {
-            border-color: #00c853;
-            background: rgba(0, 200, 83, 0.1);
-            color: #00c853;
-        }
-        .scenario-box .scenario-options .opt-btn.selected-wrong {
-            border-color: #ff1744;
-            background: rgba(255, 23, 68, 0.1);
-            color: #ff1744;
-        }
-        .scenario-box .scenario-options .opt-btn:disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-        .scenario-feedback {
-            font-size: 13px;
-            text-align: center;
-            padding: 8px 12px;
-            border-radius: 12px;
-            margin-top: 8px;
-            font-weight: 700;
-            background: rgba(26, 35, 48, 0.4);
-        }
-        .scenario-feedback.success {
-            color: #00c853;
-            border: 1px solid rgba(0, 200, 83, 0.2);
-        }
-        .scenario-feedback.error {
-            color: #ff1744;
-            border: 1px solid rgba(255, 23, 68, 0.2);
-        }
-        .scenario-feedback.info {
-            color: #00b4ff;
-            border: 1px solid rgba(0, 180, 255, 0.2);
-        }
+        .feedback-overlay { position: absolute; inset: 0; background: rgba(8, 11, 18, 0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-radius: 48px; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 30px 24px; z-index: 20; animation: fadeSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .feedback-overlay.show { display: flex; }
+        .feedback-overlay .big-icon { font-size: 72px; margin-bottom: 8px; filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5)); }
+        .feedback-overlay .fb-title { font-family: 'Orbitron', monospace; font-size: 28px; font-weight: 900; margin-bottom: 4px; letter-spacing: 1px; }
+        .feedback-overlay .fb-title.green { color: #00c853; text-shadow: 0 0 40px rgba(0, 200, 83, 0.3); }
+        .feedback-overlay .fb-title.gold { color: #00b4ff; text-shadow: 0 0 40px rgba(0, 180, 255, 0.3); }
+        .feedback-overlay .fb-title.red { color: #ff1744; text-shadow: 0 0 40px rgba(255, 23, 68, 0.3); }
+        .feedback-overlay .fb-sub { font-size: 16px; color: #b0c0d0; text-align: center; margin-bottom: 8px; font-weight: 500; }
+        .feedback-overlay .fb-score { background: rgba(26, 35, 48, 0.6); backdrop-filter: blur(4px); border-radius: 20px; padding: 16px 20px; width: 100%; max-width: 280px; margin: 8px 0 16px; border: 1px solid rgba(255, 255, 255, 0.04); }
+        .feedback-overlay .fb-score .row { display: flex; justify-content: space-between; font-size: 14px; padding: 6px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.04); font-weight: 600; }
+        .feedback-overlay .fb-score .row:last-child { border-bottom: none; font-weight: 800; color: #00b4ff; }
+        .feedback-overlay .fb-score .row .label { color: #8a9bb0; }
 
-        /* ─── QUALITY QUEST ─── */
-        .qa-question {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin: 4px 0 8px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .qa-question .q-text {
-            font-size: 15px;
-            font-weight: 700;
-            color: #f0f4fa;
-            margin-bottom: 8px;
-        }
-        .qa-question .q-options {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        .qa-question .q-options .opt-btn {
-            background: rgba(35, 47, 64, 0.6);
-            border: 2px solid transparent;
-            border-radius: 12px;
-            padding: 10px 14px;
-            font-size: 13px;
-            font-weight: 600;
-            color: #e8edf5;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            width: 100%;
-        }
-        .qa-question .q-options .opt-btn:active {
-            transform: scale(0.96);
-        }
-        .qa-question .q-options .opt-btn.selected-correct {
-            border-color: #00c853;
-            background: rgba(0, 200, 83, 0.1);
-            color: #00c853;
-        }
-        .qa-question .q-options .opt-btn.selected-wrong {
-            border-color: #ff1744;
-            background: rgba(255, 23, 68, 0.1);
-            color: #ff1744;
-        }
-        .qa-question .q-options .opt-btn:disabled {
-            opacity: 0.5;
-            pointer-events: none;
-        }
-
-        /* ─── FEEDBACK OVERLAY ─── */
-        .feedback-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(8, 11, 18, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 48px;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 24px;
-            z-index: 20;
-            animation: fadeSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .feedback-overlay.show {
-            display: flex;
-        }
-        .feedback-overlay .big-icon {
-            font-size: 72px;
-            margin-bottom: 8px;
-            filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
-        }
-        .feedback-overlay .fb-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 28px;
-            font-weight: 900;
-            margin-bottom: 4px;
-            letter-spacing: 1px;
-        }
-        .feedback-overlay .fb-title.green {
-            color: #00c853;
-            text-shadow: 0 0 40px rgba(0, 200, 83, 0.3);
-        }
-        .feedback-overlay .fb-title.gold {
-            color: #00b4ff;
-            text-shadow: 0 0 40px rgba(0, 180, 255, 0.3);
-        }
-        .feedback-overlay .fb-title.red {
-            color: #ff1744;
-            text-shadow: 0 0 40px rgba(255, 23, 68, 0.3);
-        }
-        .feedback-overlay .fb-sub {
-            font-size: 16px;
-            color: #b0c0d0;
-            text-align: center;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        .feedback-overlay .fb-score {
-            background: rgba(26, 35, 48, 0.6);
-            backdrop-filter: blur(4px);
-            border-radius: 20px;
-            padding: 16px 20px;
-            width: 100%;
-            max-width: 280px;
-            margin: 8px 0 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .feedback-overlay .fb-score .row {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            padding: 6px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            font-weight: 600;
-        }
-        .feedback-overlay .fb-score .row:last-child {
-            border-bottom: none;
-            font-weight: 800;
-            color: #00b4ff;
-        }
-        .feedback-overlay .fb-score .row .label {
-            color: #8a9bb0;
-        }
-
-        /* ─── RESPONSIVE ─── */
         @media (max-width: 400px) {
-            #app {
-                padding: 16px 12px 20px;
-                border-radius: 32px;
-                min-height: 640px;
-            }
-            .title-main {
-                font-size: 20px;
-            }
-            .menu-item {
-                padding: 12px 14px;
-                gap: 12px;
-            }
-            .menu-item .icon {
-                font-size: 22px;
-                width: 44px;
-                height: 44px;
-            }
-            .menu-item .info .name {
-                font-size: 14px;
-            }
-            .level-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            .level-card {
-                padding: 10px 6px 8px;
-                border-radius: 16px;
-            }
-            .level-card .num {
-                font-size: 18px;
-            }
-            .level-card .name {
-                font-size: 9px;
-                letter-spacing: 0.2px;
-            }
-            .drag-item {
-                padding: 8px 14px;
-                font-size: 13px;
-                min-width: 50px;
-            }
-            .feedback-overlay .fb-title {
-                font-size: 24px;
-            }
-            .flow-board .flow-step {
-                padding: 8px 12px;
-            }
-            .flow-board .flow-step .step-text {
-                font-size: 12px;
-            }
-            .scenario-box .scenario-text {
-                font-size: 14px;
-            }
-            .btn {
-                font-size: 13px;
-                padding: 12px 16px;
-            }
-            .scenario-box .scenario-options .opt-btn {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
-            .qa-question .q-text {
-                font-size: 14px;
-            }
-            .qa-question .q-options .opt-btn {
-                font-size: 12px;
-                padding: 8px 12px;
-            }
+            #app { padding: 16px 12px 20px; border-radius: 32px; min-height: 640px; }
+            .title-main { font-size: 20px; }
+            .menu-item { padding: 12px 14px; gap: 12px; }
+            .menu-item .icon { font-size: 22px; width: 44px; height: 44px; }
+            .menu-item .info .name { font-size: 14px; }
+            .level-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .level-card { padding: 10px 6px 8px; border-radius: 16px; }
+            .level-card .num { font-size: 18px; }
+            .level-card .name { font-size: 9px; letter-spacing: 0.2px; }
+            .drag-item { padding: 8px 14px; font-size: 13px; min-width: 50px; }
+            .feedback-overlay .fb-title { font-size: 24px; }
+            .flow-board .flow-step { padding: 8px 12px; }
+            .flow-board .flow-step .step-text { font-size: 12px; }
+            .scenario-box .scenario-text { font-size: 14px; }
+            .btn { font-size: 13px; padding: 12px 16px; }
+            .scenario-box .scenario-options .opt-btn { font-size: 12px; padding: 8px 12px; }
+            .qa-question .q-text { font-size: 14px; }
+            .qa-question .q-options .opt-btn { font-size: 12px; padding: 8px 12px; }
         }
 
-        /* ─── HEARTS (lives) ─── */
-        [id$="GameStars"], #liveGameHearts, #safetyLevelStars, .level-card .stars, .level-card.completed .stars {
-            color: #ff4d6d !important;
-            text-shadow: 0 0 10px rgba(255, 77, 109, 0.45) !important;
-            letter-spacing: 2px;
-        }
+        [id$="GameStars"], #liveGameHearts, #safetyLevelStars, .level-card .stars, .level-card.completed .stars { color: #ff4d6d !important; text-shadow: 0 0 10px rgba(255, 77, 109, 0.45) !important; letter-spacing: 2px; }
         .hearts-row { color: #ff4d6d; letter-spacing: 2px; }
         @keyframes heartHit { 0% { transform: scale(1); } 30% { transform: scale(1.35); } 100% { transform: scale(1); } }
         .heart-hit { display: inline-block; animation: heartHit 0.4s; }
@@ -974,58 +174,42 @@
     <div id="app">
         <div id="dragGhost" class="drag-ghost" style="display:none;"></div>
 
-        <!-- ===== SCREEN: MAIN MENU ===== -->
+        <!-- MAIN MENU -->
         <div id="screen-main" class="screen active">
             <div class="title-main">🎯 AGENT PRO</div>
             <div class="title-sub">— CONTACT CENTER SERVICING NC —</div>
-
             <div class="menu-grid">
                 <div class="menu-item" data-game="script" id="menu-script">
                     <div class="icon">📋</div>
-                    <div class="info">
-                        <div class="name">Script Savvy <span class="badge">Lv.1</span></div>
-                        <div class="desc">Call flow &amp; standard phrases</div>
-                    </div>
+                    <div class="info"><div class="name">Script Savvy <span class="badge">Lv.1</span></div><div class="desc">Call flow &amp; standard phrases</div></div>
                     <div class="arrow">›</div>
                 </div>
                 <div class="menu-item" data-game="storm" id="menu-storm">
                     <div class="icon">🌊</div>
-                    <div class="info">
-                        <div class="name">Calm the Storm <span class="badge">Lv.1</span></div>
-                        <div class="desc">De‑escalation &amp; empathy</div>
-                    </div>
+                    <div class="info"><div class="name">Calm the Storm <span class="badge">Lv.1</span></div><div class="desc">De‑escalation &amp; empathy</div></div>
                     <div class="arrow">›</div>
                 </div>
                 <div class="menu-item" data-game="quality" id="menu-quality">
                     <div class="icon">⭐</div>
-                    <div class="info">
-                        <div class="name">Quality Quest <span class="badge">Lv.1</span></div>
-                        <div class="desc">QA, compliance &amp; metrics</div>
-                    </div>
+                    <div class="info"><div class="name">Quality Quest <span class="badge">Lv.1</span></div><div class="desc">QA, compliance &amp; metrics</div></div>
                     <div class="arrow">›</div>
                 </div>
                 <div class="menu-item" data-game="live" id="menu-live">
                     <div class="icon">🎙️</div>
-                    <div class="info">
-                        <div class="name">The Live Call <span class="badge">Lv.1</span></div>
-                        <div class="desc">Full Simulation Assessment</div>
-                    </div>
+                    <div class="info"><div class="name">The Live Call <span class="badge">Lv.1</span></div><div class="desc">Full Simulation Assessment</div></div>
                     <div class="arrow">›</div>
                 </div>
             </div>
-
             <div class="progress-wrap">
                 <div class="progress-row">
                     <span class="label">🏆 Overall Progress</span>
                     <span class="value">Level 3 · XP 1800 / 2500</span>
                 </div>
-                <div class="progress-track">
-                    <div class="fill" style="width:72%;"></div>
-                </div>
+                <div class="progress-track"><div class="fill" style="width:72%;"></div></div>
             </div>
         </div>
 
-        <!-- ===== SCREEN: SCRIPT SAVVY ===== -->
+        <!-- SCRIPT SAVVY -->
         <div id="screen-script" class="screen">
             <div class="back-row">
                 <button class="back-btn" data-back="main">‹</button>
@@ -1072,7 +256,7 @@
             </div>
         </div>
 
-        <!-- ===== SCREEN: CALM THE STORM ===== -->
+        <!-- CALM THE STORM -->
         <div id="screen-storm" class="screen">
             <div class="back-row">
                 <button class="back-btn" data-back="main">‹</button>
@@ -1119,7 +303,7 @@
             </div>
         </div>
 
-        <!-- ===== SCREEN: QUALITY QUEST ===== -->
+        <!-- QUALITY QUEST -->
         <div id="screen-quality" class="screen">
             <div class="back-row">
                 <button class="back-btn" data-back="main">‹</button>
@@ -1164,7 +348,7 @@
             </div>
         </div>
 
-        <!-- ===== SCREEN: THE LIVE CALL ===== -->
+        <!-- THE LIVE CALL -->
         <div id="screen-live" class="screen">
             <div class="back-row">
                 <button class="back-btn" data-back="main">‹</button>
@@ -1212,17 +396,144 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <script>
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        // EMBEDDED MODE — lets SkillQuest load a single module
-        // straight from its dashboard and receive progress back
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // EMBEDDED MODE
         const CSS_PARAMS = new URLSearchParams(window.location.search);
         const AUTOSTART_GAME = CSS_PARAMS.get('game');
         const EMBEDDED = CSS_PARAMS.get('embed') === '1';
+
+        // 🔊 SOUND ENGINE (generated WAV, HTML Audio)
+        const SFX = (() => {
+            const SR = 22050, audio = {}; let muted = false, unlocked = false;
+            function wav(notes) {
+                const len = Math.floor((Math.max(...notes.map(n => n.t + n.d)) + .1) * SR), b = new Float32Array(len);
+                notes.forEach(n => {
+                    let ph = 0; const s0 = Math.floor(n.t * SR), sn = Math.floor(n.d * SR);
+                    for (let i = 0; i < sn && s0 + i < len; i++) {
+                        const x = i / sn; ph += n.f / SR; const p = ph % 1;
+                        const w = n.w === 's' ? (p < .5 ? 1 : -1) : n.w === 'z' ? 2 * p - 1 : Math.sin(6.2832 * p);
+                        b[s0 + i] += w * Math.min(1, i / (SR * .01)) * (1 - x) * (n.v || .6);
+                    }
+                });
+                const d = new DataView(new ArrayBuffer(44 + len * 2));
+                const W = (o, s) => [...s].forEach((c, i) => d.setUint8(o + i, c.charCodeAt(0)));
+                W(0, 'RIFF'); d.setUint32(4, 36 + len * 2, true); W(8, 'WAVEfmt '); d.setUint32(16, 16, true);
+                d.setUint16(20, 1, true); d.setUint16(22, 1, true); d.setUint32(24, SR, true); d.setUint32(28, SR * 2, true);
+                d.setUint16(32, 2, true); d.setUint16(34, 16, true); W(36, 'data'); d.setUint32(40, len * 2, true);
+                for (let i = 0; i < len; i++) d.setInt16(44 + i * 2, Math.max(-1, Math.min(1, b[i])) * 32767, true);
+                return URL.createObjectURL(new Blob([d], { type: 'audio/wav' }));
+            }
+            const DEF = {
+                correct: [{f:784,t:0,d:.15,w:'s'},{f:1175,t:.12,d:.35,w:'s'}],
+                wrong: [{f:220,t:0,d:.2,w:'z'},{f:140,t:.18,d:.4,w:'z'}],
+                fanfare: [{f:523,t:0,d:.25,w:'s'},{f:659,t:.13,d:.25,w:'s'},{f:784,t:.26,d:.25,w:'s'},{f:1047,t:.39,d:.25,w:'s'},{f:1047,t:.6,d:.7,w:'n'},{f:1319,t:.6,d:.7,w:'n'}],
+                gameover: [{f:392,t:0,d:.4,w:'z'},{f:330,t:.25,d:.4,w:'z'},{f:262,t:.5,d:.4,w:'z'},{f:196,t:.75,d:.6,w:'z'}]
+            };
+            Object.keys(DEF).forEach(k => { audio[k] = new Audio(wav(DEF[k])); audio[k].preload = 'auto'; });
+            function unlock() {
+                if (unlocked) return; unlocked = true;
+                Object.values(audio).forEach(a => {
+                    a.muted = true; const p = a.play();
+                    if (p && p.then) p.then(() => { a.pause(); a.currentTime = 0; a.muted = false; }).catch(() => { a.muted = false; unlocked = false; });
+                });
+            }
+            ['pointerdown', 'touchstart', 'click'].forEach(e => document.addEventListener(e, unlock, { passive: true }));
+            return {
+                play(n) { if (muted || !audio[n]) return; try { const a = audio[n]; a.pause(); a.currentTime = 0; a.volume = 1; a.play().catch(err => console.warn('SFX blocked', err)); } catch (e) {} },
+                toggle() { muted = !muted; unlock(); if (!muted) this.play('correct'); return muted; }
+            };
+        })();
+        (function () {
+            const b = document.createElement('button'); b.textContent = '🔊';
+            b.style.cssText = 'position:fixed;top:12px;right:12px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(26,35,48,.9);color:#fff;font-size:20px;cursor:pointer;';
+            b.onclick = () => { b.textContent = SFX.toggle() ? '🔇' : '🔊'; };
+            document.body.appendChild(b);
+        })();
+
+        // 🎵 BACKGROUND MUSIC (generated in-browser, no audio files needed)
+        const BGM = (() => {
+            const SR = 22050, BEAT = 0.6, BARS = 8;
+            let audio = null, on = true, started = false, ducked = false;
+            const VOL = 0.2, VOL_DUCK = 0.07;
+
+            function build() {
+                const chords = [
+                    { r: 110,    n: [220, 261.63, 329.63] },   // Am
+                    { r: 87.31,  n: [174.61, 220, 261.63] },   // F
+                    { r: 130.81, n: [261.63, 329.63, 392] },   // C
+                    { r: 98,     n: [196, 246.94, 293.66] }    // G
+                ];
+                const len = Math.floor(BARS * 4 * BEAT * SR);
+                const b = new Float32Array(len);
+                const tri = p => 2 * Math.abs(2 * p - 1) - 1;
+                const sine = p => Math.sin(6.2832 * p);
+
+                function add(f, t, d, v, wave, pad) {
+                    const s0 = Math.floor(t * SR), sn = Math.floor(d * SR);
+                    let ph = 0;
+                    for (let i = 0; i < sn; i++) {
+                        const x = i / sn;
+                        ph += f / SR;
+                        const env = pad ? Math.sin(Math.PI * x)
+                                        : Math.min(1, i / (SR * 0.01)) * Math.pow(1 - x, 2);
+                        b[(s0 + i) % len] += wave(ph % 1) * env * v;   // wraps → seamless loop
+                    }
+                }
+
+                for (let bar = 0; bar < BARS; bar++) {
+                    const c = chords[bar % 4], t0 = bar * 4 * BEAT, oct = bar >= 4 ? 2 : 1;
+                    for (let k = 0; k < 4; k++) add(c.r, t0 + k * BEAT, BEAT * 0.9, 0.5, sine, false);   // bass
+                    [0, 1, 2, 1, 0, 1, 2, 1].forEach((ni, k) =>                                          // arp
+                        add(c.n[ni] * oct, t0 + k * BEAT / 2, 0.45, 0.2, tri, false));
+                    c.n.forEach(f => add(f, t0, 4 * BEAT, 0.07, sine, true));                            // pad
+                }
+
+                let peak = 0;
+                for (let i = 0; i < len; i++) peak = Math.max(peak, Math.abs(b[i]));
+                const g = peak ? 0.85 / peak : 1;
+
+                const d = new DataView(new ArrayBuffer(44 + len * 2));
+                const W = (o, s) => [...s].forEach((ch, i) => d.setUint8(o + i, ch.charCodeAt(0)));
+                W(0, 'RIFF'); d.setUint32(4, 36 + len * 2, true); W(8, 'WAVEfmt '); d.setUint32(16, 16, true);
+                d.setUint16(20, 1, true); d.setUint16(22, 1, true); d.setUint32(24, SR, true); d.setUint32(28, SR * 2, true);
+                d.setUint16(32, 2, true); d.setUint16(34, 16, true); W(36, 'data'); d.setUint32(40, len * 2, true);
+                for (let i = 0; i < len; i++) d.setInt16(44 + i * 2, Math.max(-1, Math.min(1, b[i] * g)) * 32767, true);
+                return URL.createObjectURL(new Blob([d], { type: 'audio/wav' }));
+            }
+
+            function vol() { return ducked ? VOL_DUCK : VOL; }
+            function start() {
+                if (started) return;
+                started = true;
+                audio = new Audio(build());
+                audio.loop = true;
+                audio.volume = vol();
+                if (on) audio.play().catch(() => { started = false; });
+            }
+            ['pointerdown', 'touchstart', 'click'].forEach(e =>
+                document.addEventListener(e, start, { passive: true }));
+            document.addEventListener('visibilitychange', () => {
+                if (!audio) return;
+                if (document.hidden) audio.pause(); else if (on) audio.play().catch(() => {});
+            });
+
+            return {
+                toggle() {
+                    on = !on; start();
+                    if (audio) { if (on) audio.play().catch(() => {}); else audio.pause(); }
+                    return on;
+                },
+                duck(v) { ducked = v; if (audio) audio.volume = vol(); }   // lower volume during voice calls
+            };
+        })();
+        (function () {
+            const b = document.createElement('button'); b.textContent = '🎵';
+            b.style.cssText = 'position:fixed;top:64px;right:12px;z-index:9999;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(26,35,48,.9);color:#fff;font-size:20px;cursor:pointer;';
+            b.onclick = () => { b.style.opacity = BGM.toggle() ? '1' : '0.4'; };
+            document.body.appendChild(b);
+        })();
 
         function cssLevelIds(game) {
             if (game === 'live') return LIVE_CALL_DATA.map((_, i) => i);
@@ -1238,22 +549,15 @@
                 const hs = heartsSummary(game, cssLevelIds(game), gameState.completed);
                 const pct = hs.pct;
                 (window.parent || window).postMessage({
-                    type: 'EIM_MODULE_PROGRESS',
-                    game,
-                    completed,
-                    total,
-                    pct,
+                    type: 'EIM_MODULE_PROGRESS', game, completed, total, pct,
                     earnedXP: earnedXP || 0,
                     heartsLeft: hearts.cur, heartsEarned: hs.earned, heartsMax: hs.max,
                     moduleComplete: completed >= total
                 }, '*');
-            } catch (e) { /* no parent listening */ }
+            } catch (e) { }
         }
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        // STATE
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        // ♥ HEARTS — 5 lives per level; hearts left on a clear = the score basis
+        // ♥ HEARTS
         const MAX_HEARTS = 5;
         const hearts = { cur: MAX_HEARTS, best: {} };
         let heartsHeaderId = null;
@@ -1268,6 +572,7 @@
         function resetHearts(headerId) { hearts.cur = MAX_HEARTS; heartsHeaderId = headerId; heartsFresh = false; paintHearts(); }
         function syncHearts(headerId) { if (heartsFresh) resetHearts(headerId); else { heartsHeaderId = headerId; paintHearts(); } }
         function loseHeart() {
+            SFX.play(hearts.cur - 1 <= 0 ? 'gameover' : 'wrong');
             if (hearts.cur > 0) hearts.cur--;
             paintHearts();
             const el = heartsHeaderId && document.getElementById(heartsHeaderId);
@@ -1309,11 +614,7 @@
         };
         const PROBLEMS_PER_LEVEL = 4;
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         // LEVEL DATA
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-        // Script Savvy Levels (drag-order: call flow / standard phrases)
         const SCRIPT_LEVELS = [
             { id: 1, name: 'Opening', stars: 4 },
             { id: 2, name: 'Discovery', stars: 4 },
@@ -1323,31 +624,31 @@
         ];
 
         const SCRIPT_DATA = [
-            [ // Level 1: Opening
+            [
                 { steps: ['Greet the customer warmly', 'Introduce yourself and the company', 'Ask for the customer\'s name', 'Ask how you may help today', 'Thank them for calling'], hint: 'Think about a real phone greeting: first you say hi, then who you are, then get their name, then ask what they need.' },
                 { steps: ['Answer within 3 rings', 'State the company name and your name', 'Verify the customer\'s account details', 'Confirm the reason for the call', 'Set a friendly, helpful tone'], hint: 'Answering the phone comes before introducing yourself, which comes before verifying who they are.' },
                 { steps: ['Greet customer by name', 'State purpose of call', 'Ask open-ended questions', 'Listen actively', 'Confirm understanding'], hint: 'Start with the greeting, then say why you\'re speaking, before you start asking and listening.' },
                 { steps: ['Welcome the caller', 'Ask a rapport-building question', 'Transition into the reason for the call', 'Note down the concern', 'Assure them you will help'], hint: 'Build rapport first, then move into the real reason for the call, then document, then reassure.' },
             ],
-            [ // Level 2: Discovery
+            [
                 { steps: ['Identify customer need', 'Ask clarifying questions', 'Paraphrase the issue', 'Confirm pain points', 'Document key details'], hint: 'You must know the need before you can ask clarifying questions about it.' },
                 { steps: ['Listen without interrupting', 'Ask probing questions', 'Repeat back what you heard', 'Ask if there is anything else', 'Log the full context'], hint: 'Listening always comes first — you can\'t ask good follow-up questions before you\'ve heard the customer out.' },
                 { steps: ['Ask for the account or reference number', 'Pull up the account in the CRM', 'Ask the customer to describe the issue', 'Note the urgency level', 'Confirm you understand correctly'], hint: 'You need the account number before you can look it up in the CRM.' },
                 { steps: ['Empathize with the situation', 'Ask targeted follow-up questions', 'Clarify the timeline of the issue', 'Summarize the concern', 'Check for related issues'], hint: 'Empathy comes first to build trust, then you dig deeper with questions.' },
             ],
-            [ // Level 3: Resolution
+            [
                 { steps: ['Present solution options', 'Explain next steps', 'Set clear expectations', 'Check for understanding', 'Offer additional help'], hint: 'Present the options before you explain what happens next.' },
                 { steps: ['Diagnose the root cause', 'Propose the best-fit solution', 'Walk the customer through the fix', 'Verify the issue is resolved', 'Ask if anything else is needed'], hint: 'You must diagnose the problem before you can propose a fix for it.' },
                 { steps: ['Check available options in the system', 'Explain the chosen solution clearly', 'Set expectations on timeline', 'Confirm customer agreement', 'Document the resolution'], hint: 'Check the system for options first, then explain the one you chose.' },
                 { steps: ['Apologize for the inconvenience', 'Offer a concrete remedy', 'Explain how it will be processed', 'Confirm the customer is satisfied', 'Provide a reference number'], hint: 'Start with the apology, then move into the actual fix you\'re offering.' },
             ],
-            [ // Level 4: Closing
+            [
                 { steps: ['Summarize resolution', 'Confirm customer satisfaction', 'Provide reference number', 'Thank the customer', 'End with positive note'], hint: 'Recap what was fixed before you ask if the customer is happy with it.' },
                 { steps: ['Recap what was discussed', 'Ask if there is anything else needed', 'Provide any follow-up instructions', 'Thank the customer for their patience', 'Close the call politely'], hint: 'Recap first, then check for other needs, then give any final instructions.' },
                 { steps: ['Confirm the issue is fully resolved', 'Offer additional assistance', 'Remind the customer of any next steps', 'Thank them for calling', 'Wish them a good day'], hint: 'Confirm the resolution before offering more help — you need to know it\'s actually fixed first.' },
                 { steps: ['Restate the solution provided', 'Ask for final confirmation', 'Log the call outcome', 'Thank the customer sincerely', 'End the call professionally'], hint: 'Restate the solution, then get their confirmation, before you log anything.' },
             ],
-            [ // Level 5: Full Flow
+            [
                 { steps: ['Open with rapport', 'Gather information', 'Diagnose the problem', 'Propose solution', 'Close with commitment'], hint: 'This mirrors the whole call: open, gather info, diagnose, solve, then close.' },
                 { steps: ['Greet and verify the customer', 'Listen and clarify the concern', 'Offer the best resolution', 'Confirm satisfaction', 'Thank and close professionally'], hint: 'Verify who they are first, then listen to the concern, before offering any resolution.' },
                 { steps: ['Answer promptly and introduce yourself', 'Ask discovery questions', 'Present and explain the fix', 'Check understanding and agreement', 'End the call on a positive note'], hint: 'Introduce yourself, then discover the issue, before presenting any fix.' },
@@ -1355,7 +656,6 @@
             ],
         ];
 
-        // Calm the Storm Levels (scenario + best response)
         const STORM_LEVELS = [
             { id: 1, name: 'Empathy Basics', stars: 4 },
             { id: 2, name: 'Angry Customer', stars: 4 },
@@ -1365,31 +665,31 @@
         ];
 
         const STORM_DATA = [
-            [ // Level 1: Empathy Basics
+            [
                 { scenario: 'A customer sounds mildly annoyed about a short delay in their delivery.', options: ['I understand the wait is frustrating, let me check the status for you right away.', 'Delays happen, there\'s nothing I can do.', 'You\'ll just have to wait it out.', 'That\'s not really my department.'], correct: 0, feedback: '✅ Correct! Acknowledging the frustration first builds trust before you dig into the fix.' },
                 { scenario: 'A first-time caller seems unsure how to explain their issue.', options: ['No worries, take your time — I\'m here to help you walk through it.', 'Please hurry up, I have other calls.', 'You need to be clearer.', 'Call back when you know what you want.'], correct: 0, feedback: '✅ Correct! Patience and reassurance put nervous callers at ease.' },
                 { scenario: 'A customer apologizes for calling about a "small" issue.', options: ['No issue is too small — I\'m glad you called, let\'s sort it out.', 'Yes, this is a waste of time.', 'You should have looked it up online first.', 'This really isn\'t worth a call.'], correct: 0, feedback: '✅ Correct! Validating the customer\'s concern, however small, keeps trust high.' },
                 { scenario: 'A customer thanks you mid-call for being helpful so far.', options: ['You\'re very welcome — let\'s keep going and get this fully sorted.', 'Ok, moving on.', 'That\'s my job.', 'Let\'s not waste time on pleasantries.'], correct: 0, feedback: '✅ Correct! Acknowledging appreciation warmly keeps the positive rapport going.' },
             ],
-            [ // Level 2: Angry Customer
+            [
                 { scenario: 'A customer calls, furious about a $50 overcharge on their bill that they\'ve called about twice before.', options: ['Sir, I understand you\'re upset. Let me personally investigate this for you right now.', 'I apologize for the confusion. Let me transfer you to billing.', 'You need to calm down and I will look into this.', 'That charge is correct. Let me explain why.'], correct: 0, feedback: '✅ Perfect! You acknowledged their frustration and took ownership. This de-escalates and builds trust.' },
                 { scenario: 'A customer is yelling because their service was disconnected without notice.', options: ['I hear how upsetting this is, and I\'m going to look into why this happened right now.', 'Please stop shouting or I will end the call.', 'That\'s a system issue, not mine to fix.', 'You probably missed a payment.'], correct: 0, feedback: '✅ Correct! Staying calm and taking immediate ownership defuses anger fastest.' },
                 { scenario: 'A customer demands to speak to a supervisor immediately, very upset.', options: ['I understand you want this escalated — let me see what I can resolve first, and I\'ll loop in a supervisor if needed.', 'Supervisors are busy, you\'ll have to wait.', 'There\'s no need for that.', 'Fine, hold while I transfer you without explanation.'], correct: 0, feedback: '✅ Correct! Offering to help first while acknowledging the escalation request shows good judgment.' },
                 { scenario: 'A customer says this is the third time they\'ve had to call about the same issue.', options: ['I\'m sorry you\'ve had to call multiple times — I\'ll make sure this gets resolved today.', 'That\'s unusual, are you sure?', 'I can only fix what\'s in front of me now.', 'You should have asked for a case number before.'], correct: 0, feedback: '✅ Correct! Owning the repeated inconvenience and committing to resolution rebuilds confidence.' },
             ],
-            [ // Level 3: Confused Customer
+            [
                 { scenario: 'A customer is confused about how to use a new feature and feels overwhelmed.', options: ['I understand this can be confusing at first. Let me walk you through it step by step.', 'It\'s really simple, just follow the instructions.', 'You should watch the tutorial video.', 'I\'ll send you the user manual.'], correct: 1, feedback: '✅ Great! You validated their feeling and offered guided support, which reduces anxiety.' },
                 { scenario: 'A customer doesn\'t understand the terms on their invoice.', options: ['Let me go through the invoice with you line by line so it\'s clear.', 'It\'s all explained on the invoice already.', 'That\'s standard, everyone gets the same thing.', 'You can look it up on our website.'], correct: 0, feedback: '✅ Correct! Walking through it together resolves confusion far better than pointing elsewhere.' },
                 { scenario: 'A customer mixes up two different products and is unsure which one they have.', options: ['Let\'s check your account together so we can confirm exactly which product you have.', 'You should know what you bought.', 'Both products are basically the same.', 'Check your receipt.'], correct: 0, feedback: '✅ Correct! Checking together resolves the confusion directly instead of deflecting.' },
                 { scenario: 'A customer keeps asking the same question because they didn\'t understand the first answer.', options: ['Let me explain that a different way to make sure it\'s clear.', 'I already told you that.', 'Please listen more carefully.', 'That\'s the only way I can explain it.'], correct: 0, feedback: '✅ Correct! Rephrasing patiently shows care and improves understanding.' },
             ],
-            [ // Level 4: Urgent Issue
+            [
                 { scenario: 'A customer is in a rush and needs an immediate solution for a technical issue.', options: ['I\'ll do my best to help you quickly. Let me start by checking your account.', 'You\'ll need to wait for a technician.', 'Why didn\'t you call earlier?', 'That\'s not our problem.'], correct: 0, feedback: '✅ Excellent! You acknowledged their urgency and started working on it immediately.' },
                 { scenario: 'A customer says they have an important meeting in 10 minutes and needs their account unlocked now.', options: ['I understand the urgency — let\'s get your account unlocked right away.', 'I can\'t promise anything that fast.', 'You should have called earlier.', 'This will take a while, please be patient.'], correct: 0, feedback: '✅ Correct! Matching urgency with immediate action is exactly what the moment calls for.' },
                 { scenario: 'A customer\'s payment failed right before a deadline and they are panicking.', options: ['Let\'s fix this together right now so you don\'t miss your deadline.', 'Payments fail sometimes, try again later.', 'That\'s a common issue, nothing urgent.', 'You\'ll need to contact billing separately.'], correct: 0, feedback: '✅ Correct! Immediate, reassuring action is the right response to a time-sensitive problem.' },
                 { scenario: 'A customer says their business operations are affected by a service outage right now.', options: ['This is urgent — let me escalate and prioritize this for you immediately.', 'Outages usually resolve on their own.', 'I\'ll note it, but no promises on timing.', 'You\'ll need to wait for the next update cycle.'], correct: 0, feedback: '✅ Correct! Recognizing business impact and escalating promptly is the right call.' },
             ],
-            [ // Level 5: Complex Escalation
+            [
                 { scenario: 'A customer is upset because they were promised a callback that never happened.', options: ['I apologize for the missed callback. I will personally ensure you get a follow-up today.', 'That was probably an oversight. I\'ll note it.', 'You should have called us back.', 'I don\'t know why they didn\'t call you.'], correct: 0, feedback: '✅ Outstanding! You took responsibility and provided a concrete action to rebuild trust.' },
                 { scenario: 'A customer is escalating because multiple agents couldn\'t solve their complex problem.', options: ['I understand how frustrating this must be. I am a senior agent and I will personally own this case.', 'Let me transfer you to another department.', 'I\'ll try to help but no promises.', 'You might need to speak with a manager.'], correct: 0, feedback: '✅ Exceptional! You showed empathy, authority, and commitment — exactly what they needed.' },
                 { scenario: 'A long-time customer threatens to cancel after a series of repeated issues.', options: ['I completely understand your frustration after everything you\'ve been through — let me make this right.', 'We\'re sorry to see you go, I\'ll process the cancellation.', 'These things happen with any provider.', 'I\'ll transfer you to retention.'], correct: 0, feedback: '✅ Correct! Owning the history and committing to fix it shows real accountability.' },
@@ -1397,7 +697,6 @@
             ],
         ];
 
-        // Quality Quest Levels (QA / compliance quiz)
         const QUALITY_LEVELS = [
             { id: 1, name: 'QA Basics', stars: 4 },
             { id: 2, name: 'Compliance', stars: 4 },
@@ -1407,31 +706,31 @@
         ];
 
         const QUALITY_DATA = [
-            [ // Level 1: QA Basics
+            [
                 { question: 'What is the first step when handling a customer complaint?', options: ['Apologize and acknowledge the issue', 'Transfer to a manager', 'Blame the system', 'Promise a refund'], correct: 0 },
                 { question: 'What is the ideal tone to use with an upset customer?', options: ['Calm, empathetic, and professional', 'Firm and dismissive', 'Rushed and short', 'Sarcastic'], correct: 0 },
                 { question: 'What should you do before ending any call?', options: ['Confirm the issue is resolved and ask if there\'s anything else', 'Hang up immediately once the main issue is done', 'Ask the customer to call back later', 'Skip the closing entirely'], correct: 0 },
                 { question: 'Why is active listening important in a contact center?', options: ['It ensures you understand and address the actual concern', 'It makes the call longer', 'It is only needed for VIP customers', 'It is optional'], correct: 0 },
             ],
-            [ // Level 2: Compliance
+            [
                 { question: 'Which of these is a required compliance statement?', options: ['This call is being recorded for quality purposes', 'We are the best company', 'I will fix everything', 'Please hold'], correct: 0 },
                 { question: 'What should you do with a customer\'s sensitive personal information?', options: ['Verify identity before discussing account details, per data privacy policy', 'Share it with anyone who asks', 'Read it out loud regardless of verification', 'Post it in team chat for reference'], correct: 0 },
                 { question: 'What is required before offering a refund or discount outside policy?', options: ['Get supervisor or authorized approval first', 'Just offer it to keep the customer happy', 'Never mention refunds at all', 'Give the maximum discount automatically'], correct: 0 },
                 { question: 'What should you do if a customer asks for something outside your authority?', options: ['Explain your limits and escalate appropriately', 'Promise it anyway to end the call', 'Say it\'s impossible without checking', 'Ignore the request'], correct: 0 },
             ],
-            [ // Level 3: Metrics
+            [
                 { question: 'What is the target Average Handling Time (AHT) goal?', options: ['Under 6 minutes', 'Under 10 minutes', 'As long as needed', 'Under 3 minutes'], correct: 0 },
                 { question: 'What does "First Call Resolution" (FCR) measure?', options: ['Whether the issue is resolved on the first contact', 'How fast the agent answers the phone', 'How many calls an agent takes per day', 'How long the customer waits on hold'], correct: 0 },
                 { question: 'Why is Customer Satisfaction (CSAT) score important?', options: ['It reflects how satisfied customers are with the service received', 'It only matters for management reports', 'It has no impact on performance reviews', 'It measures call duration only'], correct: 0 },
                 { question: 'What is Average Speed of Answer (ASA)?', options: ['The average time it takes to answer an incoming call', 'The average time to resolve an issue', 'The number of calls per agent', 'The customer\'s wait time after resolution'], correct: 0 },
             ],
-            [ // Level 4: Process
+            [
                 { question: 'What should you do when you don\'t know an answer?', options: ['Put the customer on hold and find the answer', 'Make up an answer', 'Transfer the call', 'Tell the customer to call back'], correct: 0 },
                 { question: 'What is the correct process before transferring a call?', options: ['Inform the customer and provide context to the next agent', 'Transfer immediately without explanation', 'Ask the customer to repeat everything to the next agent', 'Hang up and let them call back'], correct: 0 },
                 { question: 'What should be documented after every customer interaction?', options: ['A clear summary of the issue and resolution in the CRM', 'Nothing, verbal handling is enough', 'Only the customer\'s name', 'Only escalated cases'], correct: 0 },
                 { question: 'What is the proper way to place a customer on hold?', options: ['Ask permission, explain why, and check back periodically', 'Put them on hold without saying anything', 'Leave them on hold indefinitely', 'Transfer without placing on hold'], correct: 0 },
             ],
-            [ // Level 5: Advanced QA
+            [
                 { question: 'How often should you summarize the conversation?', options: ['At key points and at the end of the call', 'Only at the beginning', 'Only at the end', 'Never'], correct: 0 },
                 { question: 'What is the best practice when a customer becomes abusive?', options: ['Stay professional, set boundaries, and follow the escalation protocol', 'Match their tone to assert yourself', 'Hang up immediately without warning', 'Argue back to defend yourself'], correct: 0 },
                 { question: 'Why is quality monitoring (call scoring) conducted?', options: ['To ensure consistent service quality and identify coaching opportunities', 'To penalize agents unfairly', 'It has no real purpose', 'Only for new hires'], correct: 0 },
@@ -1439,12 +738,9 @@
             ],
         ];
 
-        // The Live Call — full simulation scenarios
         const LIVE_CALL_DATA = [
             {
-                title: 'Billing Dispute',
-                icon: '💳',
-                desc: 'An angry repeat caller over an unexplained charge',
+                title: 'Billing Dispute', icon: '💳', desc: 'An angry repeat caller over an unexplained charge',
                 turns: [
                     { category: 'Greeting', text: 'Hi, this is the third time I\'m calling about a charge on my bill that I never agreed to. I\'m really frustrated.', options: ['Good day! I completely understand your frustration, and I\'m sorry you\'ve had to call multiple times. Let\'s get this sorted right now — may I have your account number?', 'Ok, what\'s the charge?', 'Please calm down, I\'ll check it.', 'That\'s strange, are you sure?'], correct: 0, feedback: '✅ Great opening — you acknowledged the frustration and asked for what you need to help.' },
                     { category: 'Discovery', text: 'It\'s account number 4521. The charge is for $45 and I have no idea what it\'s for.', options: ['Let me pull that up and check exactly what that charge is for — one moment please.', 'That\'s probably a subscription you forgot about.', 'I can\'t see anything wrong on my end.', 'You\'ll need to dispute that with your bank.'], correct: 0, feedback: '✅ Correct — investigating before assuming keeps the customer informed and builds trust.' },
@@ -1454,9 +750,7 @@
                 ],
             },
             {
-                title: 'Service Outage',
-                icon: '📡',
-                desc: 'A business customer affected by an unexpected outage',
+                title: 'Service Outage', icon: '📡', desc: 'A business customer affected by an unexpected outage',
                 turns: [
                     { category: 'Greeting', text: 'Hello, our internet has been down for two hours and it\'s affecting our whole office. This is urgent.', options: ['I understand how urgent this is for your business — thank you for calling. Can I get your account number so I can check the outage status right away?', 'Outages happen sometimes, please be patient.', 'I\'ll need you to try restarting your router first.', 'There\'s nothing I can do about outages.'], correct: 0, feedback: '✅ Correct — matching their urgency and moving straight to action builds confidence.' },
                     { category: 'Discovery', text: 'It\'s account 7734. We really need this fixed as soon as possible.', options: ['Let me check the outage map for your area right now to see what\'s happening.', 'It\'s probably just your equipment.', 'I can\'t check that from here.', 'You\'ll have to wait for the scheduled maintenance window.'], correct: 0, feedback: '✅ Correct — checking the actual outage status is the right first diagnostic step.' },
@@ -1466,9 +760,7 @@
                 ],
             },
             {
-                title: 'Feature Confusion',
-                icon: '❓',
-                desc: 'A confused customer struggling with a new app feature',
+                title: 'Feature Confusion', icon: '❓', desc: 'A confused customer struggling with a new app feature',
                 turns: [
                     { category: 'Greeting', text: 'Hi, I just don\'t understand this new app update at all. I\'m so lost.', options: ['No worries at all, I\'m happy to walk you through it step by step. What are you trying to do first?', 'It\'s really simple, just explore the app.', 'Have you watched the tutorial video?', 'A lot of people are complaining about that.'], correct: 0, feedback: '✅ Correct — reassuring the customer and asking a focused question sets up a calm walkthrough.' },
                     { category: 'Discovery', text: 'I\'m trying to set up auto-pay but I can\'t find the option anywhere.', options: ['Got it — let\'s check your Account Settings menu together, that\'s usually where it\'s located.', 'It should be obvious, just look around.', 'That feature might not exist anymore.', 'I\'m not sure, try searching online.'], correct: 0, feedback: '✅ Correct — guiding them to the exact location together resolves the confusion directly.' },
@@ -1479,28 +771,23 @@
             },
         ];
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         // HELPERS
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));
-                [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
-
+        function shuffle(arr) { for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; } return arr; }
         function $(sel) { return document.querySelector(sel); }
-
         function $$(sel) { return document.querySelectorAll(sel); }
 
         function showScreen(id) {
             $$('.screen').forEach(s => s.classList.remove('active'));
             const el = document.getElementById(id);
             if (el) el.classList.add('active');
+            BGM.duck(id === 'screen-live');
             $$('.feedback-overlay').forEach(f => f.classList.remove('show'));
             stopTimer();
             state.seconds = 0;
             if (id === 'screen-main') updateMainMenu();
         }
 
-        function formatTime(s) { const m = String(Math.floor(s / 60)).padStart(2, '0'); const sec = String(s % 60).padStart(2,
-            '0'); return m + ':' + sec; }
+        function formatTime(s) { const m = String(Math.floor(s / 60)).padStart(2, '0'); const sec = String(s % 60).padStart(2, '0'); return m + ':' + sec; }
 
         function startTimer(id) {
             stopTimer();
@@ -1510,8 +797,7 @@
             state.timerInterval = setInterval(() => { state.seconds++; el.textContent = formatTime(state.seconds); }, 1000);
         }
 
-        function stopTimer() { if (state.timerInterval) { clearInterval(state.timerInterval);
-                state.timerInterval = null; } }
+        function stopTimer() { if (state.timerInterval) { clearInterval(state.timerInterval); state.timerInterval = null; } }
 
         function renderLevelGrid(container, levels, completed, current) {
             container.innerHTML = '';
@@ -1523,8 +809,7 @@
                 if (isDone) div.classList.add('completed');
                 if (isActive) div.classList.add('active');
                 if (idx > current + 1) div.classList.add('locked');
-                div.innerHTML =
-                    `<div class="num">${lv.id}</div><div class="name">${lv.name}</div><div class="stars">${levelHeartsStr(container.id.replace('LevelGrid', ''), lv.id, isDone)}</div>`;
+                div.innerHTML = `<div class="num">${lv.id}</div><div class="name">${lv.name}</div><div class="stars">${levelHeartsStr(container.id.replace('LevelGrid', ''), lv.id, isDone)}</div>`;
                 if (idx <= current + 1 && !isDone) {
                     div.style.cursor = 'pointer';
                     div.addEventListener('click', () => {
@@ -1540,9 +825,7 @@
             });
         }
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         // UNLOCK STATUS
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         function getUnlockStatus() {
             const total = 5;
             const scriptDone = state.script.completed.size === total;
@@ -1551,21 +834,16 @@
             const liveTotal = LIVE_CALL_DATA.length;
             const liveDone = state.live.completed.size === liveTotal;
             return {
-                script: { unlocked: true, progress: `${state.script.completed.size}/${total}`, done: scriptDone,
-                    level: state.script.level },
-                storm: { unlocked: true, progress: `${state.storm.completed.size}/${total}`, done: stormDone,
-                    level: state.storm.level },
-                quality: { unlocked: true, progress: `${state.quality.completed.size}/${total}`, done: qualityDone,
-                    level: state.quality.level },
-                live: { unlocked: true, progress: `${state.live.completed.size}/${liveTotal}`, done: liveDone,
-                    level: state.live.scenario },
+                script: { unlocked: true, progress: `${state.script.completed.size}/${total}`, done: scriptDone, level: state.script.level },
+                storm: { unlocked: true, progress: `${state.storm.completed.size}/${total}`, done: stormDone, level: state.storm.level },
+                quality: { unlocked: true, progress: `${state.quality.completed.size}/${total}`, done: qualityDone, level: state.quality.level },
+                live: { unlocked: true, progress: `${state.live.completed.size}/${liveTotal}`, done: liveDone, level: state.live.scenario },
             };
         }
 
         function updateMainMenu() {
             const status = getUnlockStatus();
-            const ids = ['script', 'storm', 'quality', 'live'];
-            ids.forEach(id => {
+            ['script', 'storm', 'quality', 'live'].forEach(id => {
                 const el = document.getElementById(`menu-${id}`);
                 if (!el) return;
                 const data = status[id];
@@ -1573,30 +851,17 @@
                 if (data.unlocked) {
                     el.classList.remove('locked');
                     if (badge) {
-                        if (data.done) {
-                            badge.textContent = '✅ Complete';
-                            badge.className = 'badge complete';
-                        } else {
-                            const lv = data.level + 1;
-                            badge.textContent = `Lv.${lv}`;
-                            badge.className = 'badge';
-                        }
+                        if (data.done) { badge.textContent = '✅ Complete'; badge.className = 'badge complete'; }
+                        else { badge.textContent = `Lv.${data.level + 1}`; badge.className = 'badge'; }
                     }
                 } else {
                     el.classList.add('locked');
-                    if (badge) {
-                        badge.textContent = '🔒 Locked';
-                        badge.className = 'badge';
-                        badge.style.background = '#4a5a70';
-                        badge.style.color = '#aab8c8';
-                    }
+                    if (badge) { badge.textContent = '🔒 Locked'; badge.className = 'badge'; badge.style.background = '#4a5a70'; badge.style.color = '#aab8c8'; }
                 }
             });
         }
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        // NAVIGATION (Modified for EMBEDDED support)
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // NAVIGATION
         document.querySelectorAll('[data-back]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const target = btn.dataset.back;
@@ -1638,15 +903,11 @@
             });
         });
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         // SCRIPT SAVVY
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        let scriptSteps = [],
-            scriptPlaced = [];
+        let scriptSteps = [], scriptPlaced = [];
 
         function initScriptSavvy() {
-            const container = document.getElementById('scriptLevelGrid');
-            renderLevelGrid(container, SCRIPT_LEVELS, state.script.completed, state.script.level);
+            renderLevelGrid(document.getElementById('scriptLevelGrid'), SCRIPT_LEVELS, state.script.completed, state.script.level);
             document.getElementById('script-select').style.display = '';
             document.getElementById('script-instructions').style.display = 'none';
             document.getElementById('script-game').style.display = 'none';
@@ -1654,8 +915,7 @@
         }
 
         document.getElementById('scriptStartBtn').addEventListener('click', () => {
-            const lv = state.script.level;
-            const data = SCRIPT_LEVELS[lv];
+            const data = SCRIPT_LEVELS[state.script.level];
             if (!data) return;
             state.script.problem = 0;
             document.getElementById('script-select').style.display = 'none';
@@ -1691,8 +951,7 @@
               <span class="step-text" id="scriptSlotText_${i}">⬇ Drop here</span>
               <span class="step-status" id="scriptSlotStatus_${i}">⬜</span>
             `;
-                div.addEventListener('dragover', (e) => { e.preventDefault();
-                    div.classList.add('drag-over'); });
+                div.addEventListener('dragover', (e) => { e.preventDefault(); div.classList.add('drag-over'); });
                 div.addEventListener('dragleave', () => div.classList.remove('drag-over'));
                 div.addEventListener('drop', (e) => {
                     e.preventDefault();
@@ -1711,8 +970,7 @@
                 el.textContent = text;
                 el.draggable = true;
                 el.dataset.text = text;
-                el.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/plain', text);
-                    el.classList.add('dragging'); });
+                el.addEventListener('dragstart', (e) => { e.dataTransfer.setData('text/plain', text); el.classList.add('dragging'); });
                 el.addEventListener('dragend', () => el.classList.remove('dragging'));
                 el.addEventListener('touchstart', (e) => {
                     const touch = e.touches[0];
@@ -1740,12 +998,9 @@
                     slots.forEach(s => {
                         s.classList.remove('drag-over');
                         const rect = s.getBoundingClientRect();
-                        if (touch.clientX >= rect.left && touch.clientX <= rect.right && touch.clientY >=
-                            rect.top && touch.clientY <= rect.bottom) {
+                        if (touch.clientX >= rect.left && touch.clientX <= rect.right && touch.clientY >= rect.top && touch.clientY <= rect.bottom) {
                             const idx = parseInt(s.dataset.slot);
-                            if (!isNaN(idx) && window._scriptDragText) {
-                                handleScriptDrop(idx, window._scriptDragText);
-                            }
+                            if (!isNaN(idx) && window._scriptDragText) handleScriptDrop(idx, window._scriptDragText);
                         }
                     });
                     window._scriptDragText = null;
@@ -1753,8 +1008,7 @@
                 zone.appendChild(el);
             });
 
-            document.getElementById('scriptGameLevel').textContent = 'Level ' + SCRIPT_LEVELS[state.script.level].id +
-                ' · Problem ' + (state.script.problem + 1) + '/' + PROBLEMS_PER_LEVEL;
+            document.getElementById('scriptGameLevel').textContent = 'Level ' + SCRIPT_LEVELS[state.script.level].id + ' · Problem ' + (state.script.problem + 1) + '/' + PROBLEMS_PER_LEVEL;
             syncHearts('scriptGameStars');
             startTimer('scriptGameTimer');
             document.getElementById('scriptFeedback').classList.remove('show');
@@ -1775,8 +1029,7 @@
                 slotEl.querySelector('.step-status').textContent = '📌';
                 slotEl.classList.add('filled');
             }
-            const items = document.querySelectorAll('#scriptDragZone .drag-item');
-            items.forEach(el => {
+            document.querySelectorAll('#scriptDragZone .drag-item').forEach(el => {
                 if (el.dataset.text === text) {
                     el.classList.add('placed');
                     el.style.pointerEvents = 'none';
@@ -1784,15 +1037,12 @@
                 }
             });
             if (!scriptPlaced.includes(null)) {
-                setTimeout(() => {
-                    document.getElementById('scriptCheckBtn').click();
-                }, 400);
+                setTimeout(() => { document.getElementById('scriptCheckBtn').click(); }, 400);
             }
         }
 
         document.getElementById('scriptHintBtn').addEventListener('click', () => {
-            const lv = state.script.level;
-            const data = SCRIPT_DATA[lv] && SCRIPT_DATA[lv][state.script.problem];
+            const data = SCRIPT_DATA[state.script.level] && SCRIPT_DATA[state.script.level][state.script.problem];
             if (!data || !data.hint) return;
             const hintEl = document.getElementById('scriptHintText');
             hintEl.textContent = '💡 ' + data.hint;
@@ -1816,18 +1066,11 @@
             let correct = true;
             for (let i = 0; i < total; i++) {
                 const slot = document.querySelector(`#scriptBoard .flow-step[data-slot="${i}"]`);
-                const stepText = scriptPlaced[i];
-                const isCorrect = stepText === scriptSteps[i].text;
+                const isCorrect = scriptPlaced[i] === scriptSteps[i].text;
                 if (slot) {
                     slot.classList.remove('correct', 'wrong');
-                    if (isCorrect) {
-                        slot.classList.add('correct');
-                        slot.querySelector('.step-status').textContent = '✅';
-                    } else {
-                        slot.classList.add('wrong');
-                        slot.querySelector('.step-status').textContent = '❌';
-                        correct = false;
-                    }
+                    if (isCorrect) { slot.classList.add('correct'); slot.querySelector('.step-status').textContent = '✅'; }
+                    else { slot.classList.add('wrong'); slot.querySelector('.step-status').textContent = '❌'; correct = false; }
                 }
             }
             if (correct) {
@@ -1855,6 +1098,7 @@
         let scriptLevelJustCompleted = false;
 
         function showScriptComplete(success, levelComplete) {
+            SFX.play(levelComplete ? 'fanfare' : 'correct');
             stopTimer();
             const fb = document.getElementById('scriptFeedback');
             if (success && levelComplete) {
@@ -1869,8 +1113,7 @@
                 state.script.completed.add(SCRIPT_LEVELS[state.script.level].id);
                 keepHearts('script', SCRIPT_LEVELS[state.script.level].id);
                 notifyCssProgress('script', xp + 30);
-                document.getElementById('scriptFbNext').style.display = (state.script.level < SCRIPT_LEVELS.length - 1) ?
-                    '' : 'none';
+                document.getElementById('scriptFbNext').style.display = (state.script.level < SCRIPT_LEVELS.length - 1) ? '' : 'none';
                 document.getElementById('scriptFbNext').textContent = '➜ NEXT LEVEL';
                 document.getElementById('scriptFbReplay').style.display = '';
                 document.getElementById('scriptFbReplay').textContent = '↻ REPLAY';
@@ -1892,24 +1135,17 @@
         document.getElementById('scriptFbReplay').addEventListener('click', () => {
             { const t = document.getElementById('scriptFbReplay').textContent; if (t === '↻ REPLAY' || t === '↻ RETRY LEVEL') heartsFresh = true; }
             document.getElementById('scriptFeedback').classList.remove('show');
-            if (document.getElementById('scriptFbReplay').textContent === '↻ OK' || document.getElementById(
-                    'scriptFbReplay').textContent === '↻ TRY AGAIN') {
-                startScriptGame();
-            } else { startScriptGame(); }
+            startScriptGame();
         });
 
         document.getElementById('scriptFbNext').addEventListener('click', () => {
             document.getElementById('scriptFeedback').classList.remove('show');
-            if (!scriptLevelJustCompleted) {
-                startScriptGame();
-                return;
-            }
+            if (!scriptLevelJustCompleted) { startScriptGame(); return; }
             if (state.script.level < SCRIPT_LEVELS.length - 1) {
                 state.script.level++;
                 document.getElementById('script-game').style.display = 'none';
                 document.getElementById('script-select').style.display = '';
-                renderLevelGrid(document.getElementById('scriptLevelGrid'), SCRIPT_LEVELS, state.script.completed, state
-                    .script.level);
+                renderLevelGrid(document.getElementById('scriptLevelGrid'), SCRIPT_LEVELS, state.script.completed, state.script.level);
             } else {
                 document.getElementById('script-game').style.display = 'none';
                 document.getElementById('script-select').style.display = '';
@@ -1917,15 +1153,12 @@
             }
         });
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         // CALM THE STORM
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         let stormAnswered = false;
         let stormSelected = -1;
 
         function initCalmTheStorm() {
-            const container = document.getElementById('stormLevelGrid');
-            renderLevelGrid(container, STORM_LEVELS, state.storm.completed, state.storm.level);
+            renderLevelGrid(document.getElementById('stormLevelGrid'), STORM_LEVELS, state.storm.completed, state.storm.level);
             document.getElementById('storm-select').style.display = '';
             document.getElementById('storm-instructions').style.display = 'none';
             document.getElementById('storm-game').style.display = 'none';
@@ -1933,8 +1166,7 @@
         }
 
         document.getElementById('stormStartBtn').addEventListener('click', () => {
-            const lv = state.storm.level;
-            const data = STORM_LEVELS[lv];
+            const data = STORM_LEVELS[state.storm.level];
             if (!data) return;
             state.storm.problem = 0;
             document.getElementById('storm-select').style.display = 'none';
@@ -1951,8 +1183,7 @@
         });
 
         function startStormGame() {
-            const lv = state.storm.level;
-            const data = STORM_DATA[lv] && STORM_DATA[lv][state.storm.problem];
+            const data = STORM_DATA[state.storm.level] && STORM_DATA[state.storm.level][state.storm.problem];
             if (!data) return;
             stormAnswered = false;
             stormSelected = -1;
@@ -1967,8 +1198,7 @@
                 btn.dataset.idx = idx;
                 btn.addEventListener('click', function() {
                     if (stormAnswered) return;
-                    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected-correct',
-                        'selected-wrong'));
+                    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
                     this.classList.add('selected-correct');
                     stormSelected = idx;
                 });
@@ -1979,8 +1209,7 @@
             fb.textContent = 'Choose the best response to de‑escalate.';
             fb.className = 'scenario-feedback info';
 
-            document.getElementById('stormGameLevel').textContent = 'Level ' + STORM_LEVELS[state.storm.level].id +
-                ' · Problem ' + (state.storm.problem + 1) + '/' + PROBLEMS_PER_LEVEL;
+            document.getElementById('stormGameLevel').textContent = 'Level ' + STORM_LEVELS[state.storm.level].id + ' · Problem ' + (state.storm.problem + 1) + '/' + PROBLEMS_PER_LEVEL;
             syncHearts('stormGameStars');
             startTimer('stormGameTimer');
             document.getElementById('stormFeedbackOverlay').classList.remove('show');
@@ -2011,18 +1240,14 @@
                 fb.className = 'scenario-feedback success';
                 state.storm.problem++;
                 if (state.storm.problem < PROBLEMS_PER_LEVEL) {
-                    setTimeout(() => {
-                        showStormComplete(true, false);
-                    }, 600);
+                    setTimeout(() => { showStormComplete(true, false); }, 600);
                 } else {
                     state.storm.problem = 0;
                     state.storm.completed.add(STORM_LEVELS[lv].id);
                     keepHearts('storm', STORM_LEVELS[lv].id);
                     notifyCssProgress('storm', 75);
                     updateMainMenu();
-                    setTimeout(() => {
-                        showStormComplete(true, true);
-                    }, 600);
+                    setTimeout(() => { showStormComplete(true, true); }, 600);
                 }
             } else {
                 if (loseHeart()) { stormLevelJustCompleted = false; showOutOfHearts('storm', 'stormFeedbackOverlay', 'storm'); return; }
@@ -2030,8 +1255,7 @@
                 fb.className = 'scenario-feedback error';
                 setTimeout(() => {
                     stormAnswered = false;
-                    opts.forEach(b => { b.classList.remove('selected-correct', 'selected-wrong');
-                        b.disabled = false; });
+                    opts.forEach(b => { b.classList.remove('selected-correct', 'selected-wrong'); b.disabled = false; });
                     fb.textContent = 'Choose the best response to de‑escalate.';
                     fb.className = 'scenario-feedback info';
                 }, 1200);
@@ -2041,6 +1265,7 @@
         let stormLevelJustCompleted = false;
 
         function showStormComplete(success, levelComplete) {
+            SFX.play(levelComplete ? 'fanfare' : 'correct');
             stopTimer();
             const fb = document.getElementById('stormFeedbackOverlay');
             if (success && levelComplete) {
@@ -2052,8 +1277,7 @@
                 document.getElementById('stormFbSub').textContent = 'Great empathy and de‑escalation skills!';
                 document.getElementById('stormFbScore').innerHTML =
                     `<div class="row"><span class="label">Hearts Left</span><span class="hearts-row">${heartsStr()}</span></div><div class="row"><span class="label">Time Bonus</span><span>+${Math.max(0, 60 - state.seconds)} XP</span></div><div class="row"><span class="label">Accuracy Bonus</span><span>+30 XP</span></div><div class="row"><span class="label">TOTAL XP</span><span class="text-glow" style="color:#00b4ff;">${xp + 30} XP</span></div>`;
-                document.getElementById('stormFbNext').style.display = (state.storm.level < STORM_LEVELS.length - 1) ?
-                    '' : 'none';
+                document.getElementById('stormFbNext').style.display = (state.storm.level < STORM_LEVELS.length - 1) ? '' : 'none';
                 document.getElementById('stormFbNext').textContent = '➜ NEXT LEVEL';
                 document.getElementById('stormFbReplay').style.display = '';
                 document.getElementById('stormFbReplay').textContent = '↻ REPLAY';
@@ -2080,16 +1304,12 @@
 
         document.getElementById('stormFbNext').addEventListener('click', () => {
             document.getElementById('stormFeedbackOverlay').classList.remove('show');
-            if (!stormLevelJustCompleted) {
-                startStormGame();
-                return;
-            }
+            if (!stormLevelJustCompleted) { startStormGame(); return; }
             if (state.storm.level < STORM_LEVELS.length - 1) {
                 state.storm.level++;
                 document.getElementById('storm-game').style.display = 'none';
                 document.getElementById('storm-select').style.display = '';
-                renderLevelGrid(document.getElementById('stormLevelGrid'), STORM_LEVELS, state.storm.completed, state
-                    .storm.level);
+                renderLevelGrid(document.getElementById('stormLevelGrid'), STORM_LEVELS, state.storm.completed, state.storm.level);
             } else {
                 document.getElementById('storm-game').style.display = 'none';
                 document.getElementById('storm-select').style.display = '';
@@ -2097,15 +1317,12 @@
             }
         });
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         // QUALITY QUEST
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         let qualityAnswered = false;
         let qualitySelected = -1;
 
         function initQualityQuest() {
-            const container = document.getElementById('qualityLevelGrid');
-            renderLevelGrid(container, QUALITY_LEVELS, state.quality.completed, state.quality.level);
+            renderLevelGrid(document.getElementById('qualityLevelGrid'), QUALITY_LEVELS, state.quality.completed, state.quality.level);
             document.getElementById('quality-select').style.display = '';
             document.getElementById('quality-instructions').style.display = 'none';
             document.getElementById('quality-game').style.display = 'none';
@@ -2113,8 +1330,7 @@
         }
 
         document.getElementById('qualityStartBtn').addEventListener('click', () => {
-            const lv = state.quality.level;
-            const data = QUALITY_LEVELS[lv];
+            const data = QUALITY_LEVELS[state.quality.level];
             if (!data) return;
             state.quality.problem = 0;
             document.getElementById('quality-select').style.display = 'none';
@@ -2131,8 +1347,7 @@
         });
 
         function startQualityGame() {
-            const lv = state.quality.level;
-            const data = QUALITY_DATA[lv] && QUALITY_DATA[lv][state.quality.problem];
+            const data = QUALITY_DATA[state.quality.level] && QUALITY_DATA[state.quality.level][state.quality.problem];
             if (!data) return;
             qualityAnswered = false;
             qualitySelected = -1;
@@ -2147,16 +1362,14 @@
                 btn.dataset.idx = idx;
                 btn.addEventListener('click', function() {
                     if (qualityAnswered) return;
-                    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected-correct',
-                        'selected-wrong'));
+                    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
                     this.classList.add('selected-correct');
                     qualitySelected = idx;
                 });
                 opts.appendChild(btn);
             });
 
-            document.getElementById('qualityGameLevel').textContent = 'Level ' + QUALITY_LEVELS[state.quality.level].id +
-                ' · Problem ' + (state.quality.problem + 1) + '/' + PROBLEMS_PER_LEVEL;
+            document.getElementById('qualityGameLevel').textContent = 'Level ' + QUALITY_LEVELS[state.quality.level].id + ' · Problem ' + (state.quality.problem + 1) + '/' + PROBLEMS_PER_LEVEL;
             syncHearts('qualityGameStars');
             startTimer('qualityGameTimer');
             document.getElementById('qualityFeedback').classList.remove('show');
@@ -2190,18 +1403,14 @@
             if (correct) {
                 state.quality.problem++;
                 if (state.quality.problem < PROBLEMS_PER_LEVEL) {
-                    setTimeout(() => {
-                        showQualityComplete(true, false);
-                    }, 600);
+                    setTimeout(() => { showQualityComplete(true, false); }, 600);
                 } else {
                     state.quality.problem = 0;
                     state.quality.completed.add(QUALITY_LEVELS[lv].id);
                     keepHearts('quality', QUALITY_LEVELS[lv].id);
                     notifyCssProgress('quality', 75);
                     updateMainMenu();
-                    setTimeout(() => {
-                        showQualityComplete(true, true);
-                    }, 600);
+                    setTimeout(() => { showQualityComplete(true, true); }, 600);
                 }
             } else {
                 if (loseHeart()) { qualityLevelJustCompleted = false; showOutOfHearts('quality', 'qualityFeedback', 'quality'); return; }
@@ -2220,6 +1429,7 @@
         let qualityLevelJustCompleted = false;
 
         function showQualityComplete(success, levelComplete) {
+            SFX.play(levelComplete ? 'fanfare' : 'correct');
             stopTimer();
             const fb = document.getElementById('qualityFeedback');
             if (success && levelComplete) {
@@ -2231,8 +1441,7 @@
                 document.getElementById('qualityFbSub').textContent = 'Excellent compliance knowledge!';
                 document.getElementById('qualityFbScore').innerHTML =
                     `<div class="row"><span class="label">Hearts Left</span><span class="hearts-row">${heartsStr()}</span></div><div class="row"><span class="label">Time Bonus</span><span>+${Math.max(0, 60 - state.seconds)} XP</span></div><div class="row"><span class="label">Accuracy Bonus</span><span>+30 XP</span></div><div class="row"><span class="label">TOTAL XP</span><span class="text-glow" style="color:#00b4ff;">${xp + 30} XP</span></div>`;
-                document.getElementById('qualityFbNext').style.display = (state.quality.level < QUALITY_LEVELS.length -
-                    1) ? '' : 'none';
+                document.getElementById('qualityFbNext').style.display = (state.quality.level < QUALITY_LEVELS.length - 1) ? '' : 'none';
                 document.getElementById('qualityFbNext').textContent = '➜ NEXT LEVEL';
                 document.getElementById('qualityFbReplay').style.display = '';
                 document.getElementById('qualityFbReplay').textContent = '↻ REPLAY';
@@ -2254,30 +1463,22 @@
         document.getElementById('qualityFbReplay').addEventListener('click', () => {
             { const t = document.getElementById('qualityFbReplay').textContent; if (t === '↻ REPLAY' || t === '↻ RETRY LEVEL') heartsFresh = true; }
             document.getElementById('qualityFeedback').classList.remove('show');
-            if (document.getElementById('qualityFbReplay').textContent === '↻ OK' || document.getElementById(
-                    'qualityFbReplay').textContent === '↻ TRY AGAIN') {
+            if (document.getElementById('qualityFbReplay').textContent === '↻ OK' || document.getElementById('qualityFbReplay').textContent === '↻ TRY AGAIN') {
                 qualityAnswered = false;
                 qualitySelected = -1;
-                const opts = document.querySelectorAll('#qualityOptions .opt-btn');
-                opts.forEach(b => { b.classList.remove('selected-correct', 'selected-wrong');
-                    b.disabled = false; });
-                document.getElementById('qualityFeedback').classList.remove('show');
+                document.querySelectorAll('#qualityOptions .opt-btn').forEach(b => { b.classList.remove('selected-correct', 'selected-wrong'); b.disabled = false; });
                 document.getElementById('qualitySubmitBtn').disabled = false;
             } else { startQualityGame(); }
         });
 
         document.getElementById('qualityFbNext').addEventListener('click', () => {
             document.getElementById('qualityFeedback').classList.remove('show');
-            if (!qualityLevelJustCompleted) {
-                startQualityGame();
-                return;
-            }
+            if (!qualityLevelJustCompleted) { startQualityGame(); return; }
             if (state.quality.level < QUALITY_LEVELS.length - 1) {
                 state.quality.level++;
                 document.getElementById('quality-game').style.display = 'none';
                 document.getElementById('quality-select').style.display = '';
-                renderLevelGrid(document.getElementById('qualityLevelGrid'), QUALITY_LEVELS, state.quality.completed,
-                    state.quality.level);
+                renderLevelGrid(document.getElementById('qualityLevelGrid'), QUALITY_LEVELS, state.quality.completed, state.quality.level);
             } else {
                 document.getElementById('quality-game').style.display = 'none';
                 document.getElementById('quality-select').style.display = '';
@@ -2285,9 +1486,7 @@
             }
         });
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        // THE LIVE CALL — full simulation
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // THE LIVE CALL
         let liveSelected = -1;
         let liveAnswered = false;
         let liveCurrentTurn = null;
@@ -2300,17 +1499,14 @@
             try {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
-                utter.rate = 0.98;
-                utter.pitch = 1;
-                utter.volume = 1;
+                utter.rate = 0.98; utter.pitch = 1; utter.volume = 1;
                 const voices = window.speechSynthesis.getVoices();
                 if (voices && voices.length) {
-                    const preferred = voices.find(v => /en[-_]US/i.test(v.lang)) ||
-                        voices.find(v => /^en/i.test(v.lang)) || voices[0];
+                    const preferred = voices.find(v => /en[-_]US/i.test(v.lang)) || voices.find(v => /^en/i.test(v.lang)) || voices[0];
                     if (preferred) utter.voice = preferred;
                 }
                 window.speechSynthesis.speak(utter);
-            } catch (e) { /* speech synthesis unavailable */ }
+            } catch (e) { }
         }
 
         function initLiveCall() {
@@ -2320,8 +1516,7 @@
                 const div = document.createElement('div');
                 div.className = 'menu-item';
                 div.style.cursor = 'pointer';
-                div.style.border = (idx === state.live.scenario) ? '2px solid #00b4ff' :
-                    '1px solid rgba(255,255,255,0.04)';
+                div.style.border = (idx === state.live.scenario) ? '2px solid #00b4ff' : '1px solid rgba(255,255,255,0.04)';
                 const done = state.live.completed.has(idx);
                 div.innerHTML = `
               <div class="icon">${call.icon}</div>
@@ -2333,8 +1528,7 @@
             `;
                 div.addEventListener('click', () => {
                     state.live.scenario = idx;
-                    grid.querySelectorAll('.menu-item').forEach(el => el.style.border =
-                        '1px solid rgba(255,255,255,0.04)');
+                    grid.querySelectorAll('.menu-item').forEach(el => el.style.border = '1px solid rgba(255,255,255,0.04)');
                     div.style.border = '2px solid #00b4ff';
                 });
                 grid.appendChild(div);
@@ -2353,8 +1547,7 @@
             document.getElementById('liveInstrObj').textContent = `🎙️ ${call.icon} ${call.title}`;
             document.getElementById('liveInstrDetail').textContent = call.desc +
                 '. Listen to the customer and choose the best response at each of the ' + call.turns.length +
-                ' turns.' + (speechSupported ? '' :
-                    ' (Voice playback isn\'t supported in this browser, but the transcript is fully readable.)');
+                ' turns.' + (speechSupported ? '' : ' (Voice playback isn\'t supported in this browser, but the transcript is fully readable.)');
         });
 
         document.getElementById('livePlayBtn').addEventListener('click', () => {
@@ -2379,15 +1572,13 @@
 
             const correctText = turnData.options[turnData.correct];
             const shuffledOpts = shuffle([...turnData.options]);
-            const newCorrect = shuffledOpts.indexOf(correctText);
-            liveCurrentTurn = { ...turnData, options: shuffledOpts, correct: newCorrect };
+            liveCurrentTurn = { ...turnData, options: shuffledOpts, correct: shuffledOpts.indexOf(correctText) };
 
             liveAnswered = false;
             liveSelected = -1;
 
             document.getElementById('liveGameLevel').textContent = call.icon + ' ' + call.title;
-            document.getElementById('liveGameTurn').textContent = 'Turn ' + (state.live.turn + 1) + '/' + call.turns
-                .length;
+            document.getElementById('liveGameTurn').textContent = 'Turn ' + (state.live.turn + 1) + '/' + call.turns.length;
             document.getElementById('liveScenarioText').textContent = liveCurrentTurn.text;
             document.getElementById('liveSpeakerLabel').textContent = '📞 CUSTOMER';
 
@@ -2400,8 +1591,7 @@
                 btn.dataset.idx = idx;
                 btn.addEventListener('click', function() {
                     if (liveAnswered) return;
-                    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected-correct',
-                        'selected-wrong'));
+                    opts.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected-correct', 'selected-wrong'));
                     this.classList.add('selected-correct');
                     liveSelected = idx;
                 });
@@ -2442,23 +1632,18 @@
             const cat = data.category;
             if (!liveScores[cat]) liveScores[cat] = { correct: 0, total: 0 };
             liveScores[cat].total++;
-            if (correct) { liveScores[cat].correct++;
-                liveCorrectCount++; }
-            if (!correct) loseHeart();
+            if (correct) { liveScores[cat].correct++; liveCorrectCount++; }
+            if (correct) SFX.play('correct'); else loseHeart();
 
             const fb = document.getElementById('liveFeedback');
-            fb.textContent = correct ? data.feedback :
-                '❌ That wasn\'t the strongest response — the call moves on regardless, just like a real call.';
+            fb.textContent = correct ? data.feedback : '❌ That wasn\'t the strongest response — the call moves on regardless, just like a real call.';
             fb.className = 'scenario-feedback ' + (correct ? 'success' : 'error');
 
             setTimeout(() => {
                 const call = LIVE_CALL_DATA[state.live.scenario];
                 state.live.turn++;
-                if (state.live.turn < call.turns.length && hearts.cur > 0) {
-                    renderLiveTurn();
-                } else {
-                    finishLiveCall();
-                }
+                if (state.live.turn < call.turns.length && hearts.cur > 0) renderLiveTurn();
+                else finishLiveCall();
             }, 1400);
         });
 
@@ -2468,6 +1653,7 @@
             const totalTurns = call.turns.length;
             const pct = Math.round((liveCorrectCount / totalTurns) * 100);
             const passed = pct >= 60 && hearts.cur > 0;
+            if (passed) SFX.play('fanfare'); else if (hearts.cur > 0) SFX.play('gameover');
             if (passed) { state.live.completed.add(state.live.scenario); keepHearts('live', state.live.scenario); }
             updateMainMenu();
 
@@ -2482,8 +1668,7 @@
             Object.keys(liveScores).forEach(cat => {
                 const s = liveScores[cat];
                 const catPct = Math.round((s.correct / s.total) * 100);
-                rows +=
-                    `<div class="row"><span class="label">${cat}</span><span>${s.correct}/${s.total} (${catPct}%)</span></div>`;
+                rows += `<div class="row"><span class="label">${cat}</span><span>${s.correct}/${s.total} (${catPct}%)</span></div>`;
             });
             rows += `<div class="row"><span class="label">Hearts Left</span><span class="hearts-row">${heartsStr()}</span></div>`;
             rows += `<div class="row"><span class="label">TOTAL XP</span><span class="text-glow" style="color:#00b4ff;">${xp} XP</span></div>`;
@@ -2509,11 +1694,9 @@
             updateMainMenu();
         });
 
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        // GLOBAL INIT (Modified for EMBEDDED support)
-        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // GLOBAL INIT
         document.addEventListener('touchmove', (e) => {
-            if (document.getElementById('dragGhost').style.display === 'block') { e.preventDefault(); }
+            if (document.getElementById('dragGhost').style.display === 'block') e.preventDefault();
         }, { passive: false });
 
         if (EMBEDDED && ['script', 'storm', 'quality', 'live'].includes(AUTOSTART_GAME)) {
@@ -2531,7 +1714,7 @@
             window.speechSynthesis.getVoices();
             window.speechSynthesis.addEventListener('voiceschanged', () => window.speechSynthesis.getVoices());
         }
-        console.log('🎯 AGENT PRO – CONTACT CENTER SERVICING NC ASSESSMENT loaded!');
+        console.log('🎯 AGENT PRO loaded with sound!');
     </script>
 </body>
 </html>
